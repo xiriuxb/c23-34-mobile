@@ -13,7 +13,7 @@ import Animated, { Easing, SlideInDown } from "react-native-reanimated";
 export default function Welocome() {
   useEffect(() => {
     setTimeout(()=>{
-        router.replace('/(tabs)')
+        router.replace('/auth/login')
     }, Platform.OS == "web"?3000:2500)
   }, []);
   return (
