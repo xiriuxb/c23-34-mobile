@@ -55,7 +55,7 @@ export default function LoginView() {
             ¡Y paga tus servicios cuando quieras!
           </ThemedText>
         </View>
-        <SafeAreaView style={authStyles.form}>
+        <SafeAreaView style={[authStyles.form,baseStyle.form]}>
           <MyInputText<LoginForm>
             control={control}
             id="email"
@@ -130,6 +130,10 @@ export const baseStyle = StyleSheet.create({
     flex: 1,
     padding: 15,
     justifyContent: "space-around",
+  },
+  form: {
+    gap: 30,
+    flex: undefined
   },
   title: {
     fontWeight: 700,
