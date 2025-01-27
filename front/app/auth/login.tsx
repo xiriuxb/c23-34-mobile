@@ -5,6 +5,7 @@ import ThemedLink from "@/components/auth/ThemedLink";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors, ColorsBase } from "@/constants/Colors";
+import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -27,7 +28,7 @@ const loginFormDefaultValues: LoginForm = {
 };
 
 export default function LoginView() {
-  const { control, handleSubmit,setFocus } = useForm<LoginForm>({
+  const { control, handleSubmit, formState:{isValid} } = useForm<LoginForm>({
     defaultValues: loginFormDefaultValues,
   });
   const [hidePassword, setHidePassword] = useState(true);
@@ -38,7 +39,9 @@ export default function LoginView() {
   };
 
   const handleSubmitForm = () => {
-    console.log();
+    if(isValid){
+      console.log("Submitted");
+    }
   };
 
   return (
@@ -95,7 +98,7 @@ export default function LoginView() {
         <View style={{ alignItems: "center", gap: 16 }}>
           <ThemedText>
             ¿No Tienes Cuenta?{" "}
-            <ThemedLink href={"/"}>
+            <ThemedLink href={"/auth/(register)/register/personal"}>
               ¡Créala aquí!
             </ThemedLink>
           </ThemedText>
