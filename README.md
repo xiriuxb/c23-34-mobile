@@ -1,5 +1,3 @@
-@@ -1 +1,44 @@
-# c23-34-mobile
 # PayFy Readme
 ## Descripción del Proyecto
 Esta aplicación permite a los usuarios:
