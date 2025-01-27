@@ -10,7 +10,7 @@ import { View } from "react-native";
 
 const nextRoutes: Record<string, Href> = {
   personal: "/auth/(register)/register/data",
-  data: "/",
+  data: "/auth/confirm-mail",
 };
 
 export default function RegisterLayout() {
