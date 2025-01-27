@@ -6,7 +6,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import { ColorsBase } from "@/constants/Colors";
 import { ScrollView, View } from "react-native";
 
-export default function RegisterView() {
+export default function RegisterDataView() {
   return (
     <ThemedView style={{ height: "100%" }}>
       <View style={authStyles.regTitleContainer}>
