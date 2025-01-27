@@ -11,3 +11,4 @@ export const scaleHeight = height / baseHeight;
 export const scale = Math.max(scaleWidth, scaleHeight);
 export const windowWidth = width;
 export const windowHeight = height;
+export const scaleMin = Math.min(scaleHeight, scaleWidth);
