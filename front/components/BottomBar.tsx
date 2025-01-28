@@ -1,5 +1,5 @@
 import { Colors } from "@/constants/Colors";
-import Dashboard from "@/screens/Dashboard";
+import Dashboard from "@/components/BodyDashboard";
 import { memo } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-paper";
@@ -75,7 +75,7 @@ const BottomBar = () => {
           borderWidth: 0.1,
           backgroundColor: Colors.light.background,
           borderRadius: 30,
-          padding: 15,
+          // padding: 15,
           elevation: 5,
           shadowColor: "#000",
           shadowOpacity: 0.2,

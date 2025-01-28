@@ -5,6 +5,7 @@ import ThemedLink from "@/components/auth/ThemedLink";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors, ColorsBase } from "@/constants/Colors";
+import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -27,7 +28,7 @@ const loginFormDefaultValues: LoginForm = {
 };
 
 export default function LoginView() {
-  const { control, handleSubmit,setFocus } = useForm<LoginForm>({
+  const { control, handleSubmit, setFocus } = useForm<LoginForm>({
     defaultValues: loginFormDefaultValues,
   });
   const [hidePassword, setHidePassword] = useState(true);
@@ -38,7 +39,7 @@ export default function LoginView() {
   };
 
   const handleSubmitForm = () => {
-    console.log();
+    router.replace("/auth/Dashboard");
   };
 
   return (
@@ -47,15 +48,14 @@ export default function LoginView() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={{ maxHeight: 900 }}
-        contentContainerStyle={baseStyle.scrollContainer}
-      >
+        contentContainerStyle={baseStyle.scrollContainer}>
         <View>
           <ThemedText style={baseStyle.title}>Ingresa a tu cuenta</ThemedText>
           <ThemedText style={baseStyle.subtitle}>
             ¡Y paga tus servicios cuando quieras!
           </ThemedText>
         </View>
-        <SafeAreaView style={[authStyles.form,baseStyle.form]}>
+        <SafeAreaView style={[authStyles.form, baseStyle.form]}>
           <MyInputText<LoginForm>
             control={control}
             id="email"
@@ -65,9 +65,10 @@ export default function LoginView() {
             placeholder="Email"
             iconName="person.2"
             returnKeyType="next"
-            onSubmitEditing={() => {passwordRef?.current?.focus();}}
-            rules={{ required: "Requerido" }}
-          ></MyInputText>
+            onSubmitEditing={() => {
+              passwordRef?.current?.focus();
+            }}
+            rules={{ required: "Requerido" }}></MyInputText>
           <MyInputText<LoginForm>
             control={control}
             id="password"
@@ -80,13 +81,11 @@ export default function LoginView() {
             handleIconAction={handleHidePassword}
             onSubmitEditing={handleSubmit(handleSubmitForm)}
             rules={{ required: "Requerido" }}
-            myref={passwordRef}
-          ></MyInputText>
+            myref={passwordRef}></MyInputText>
 
           <SimpleButton
             onPress={handleSubmit(handleSubmitForm)}
-            style={{ backgroundColor: Colors.light.text }}
-          >
+            style={{ backgroundColor: Colors.light.text }}>
             <ThemedText style={{ fontWeight: 700, color: Colors.dark.tint }}>
               Iniciar sesión
             </ThemedText>
@@ -94,10 +93,7 @@ export default function LoginView() {
         </SafeAreaView>
         <View style={{ alignItems: "center", gap: 16 }}>
           <ThemedText>
-            ¿No Tienes Cuenta?{" "}
-            <ThemedLink href={"/"}>
-              ¡Créala aquí!
-            </ThemedLink>
+            ¿No Tienes Cuenta? <ThemedLink href={"/"}>¡Créala aquí!</ThemedLink>
           </ThemedText>
           <ThemedText>
             <ThemedLink href={"/"}>¿Olvidaste tu Contraseña?</ThemedLink>
@@ -114,8 +110,7 @@ function LoginHeader() {
       style={{
         paddingVertical: 40,
         paddingHorizontal: 16,
-      }}
-    >
+      }}>
       <Image
         source={require("@/assets/images/app-icon.png")}
         style={{ height: 19, width: 63 }}
@@ -133,7 +128,7 @@ export const baseStyle = StyleSheet.create({
   },
   form: {
     gap: 30,
-    flex: undefined
+    flex: undefined,
   },
   title: {
     fontWeight: 700,
