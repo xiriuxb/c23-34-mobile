@@ -42,6 +42,7 @@ export default function MyInputText<T extends FieldValues>({
   handleIconAction,
   rules,
   myref,
+  readOnly,
   ...rest
 }: MyInputTextProps<T>) {
   const [ffocus, setFfocus] = useState(false);
@@ -55,6 +56,7 @@ export default function MyInputText<T extends FieldValues>({
   const inputRef = useRef<TextInput | null>(null);
 
   const focusInput = () => {
+    if(readOnly) return;
     setFfocus(true);
     inputRef.current?.focus();
   };
@@ -99,6 +101,7 @@ export default function MyInputText<T extends FieldValues>({
             color={ffocus ? ColorsBase.cyan400 : ColorsBase.cyan200}
           />
           <TextInput
+            readOnly={readOnly}
             {...rest}
             onFocus={() => setFfocus(true)}
             onBlur={blurInput}
@@ -147,6 +150,6 @@ const styles = StyleSheet.create({
     lineHeight: 13,
     position: "absolute",
     bottom: -18,
-    left:5
+    left: 5,
   },
 });
