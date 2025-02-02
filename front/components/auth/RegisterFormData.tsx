@@ -4,7 +4,7 @@ import { ThemedText } from "../ThemedText";
 import authStyles from "./authStyles";
 import { useContext, useRef, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
-import RegisterUserContext from "@/app/contexts/RegisterUserContext";
+import RegisterUserContext from "@/contexts/RegisterUserContext";
 
 export default function RegisterFormData() {
   const {control} = useContext(RegisterUserContext);
