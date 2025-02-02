@@ -55,8 +55,6 @@ const ServicesClient = () => {
   const insets = useSafeAreaInsets();
   return (
     <Animated.FlatList
-      entering={FadeInUp}
-      exiting={FadeOutUp}
       data={data}
       ListEmptyComponent={() => (
         <ThemedView
