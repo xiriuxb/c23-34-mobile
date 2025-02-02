@@ -28,7 +28,7 @@ const loginFormDefaultValues: LoginForm = {
 };
 
 export default function LoginView() {
-  const { control, handleSubmit, setFocus } = useForm<LoginForm>({
+  const { control, handleSubmit, formState:{isValid} } = useForm<LoginForm>({
     defaultValues: loginFormDefaultValues,
   });
   const [hidePassword, setHidePassword] = useState(true);
@@ -93,7 +93,10 @@ export default function LoginView() {
         </SafeAreaView>
         <View style={{ alignItems: "center", gap: 16 }}>
           <ThemedText>
-            ¿No Tienes Cuenta? <ThemedLink href={"/"}>¡Créala aquí!</ThemedLink>
+            ¿No Tienes Cuenta?{" "}
+            <ThemedLink href={"/auth/(register)/register/personal"}>
+              ¡Créala aquí!
+            </ThemedLink>
           </ThemedText>
           <ThemedText>
             <ThemedLink href={"/"}>¿Olvidaste tu Contraseña?</ThemedLink>
