@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 
 // Based on /auth/Dashboard code, by GioPati
 
@@ -59,7 +59,7 @@ const Dashboard = () => {
           }}
         />
         <Tabs.Screen
-          name="user-profile"
+          name="user"
           options={{
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
