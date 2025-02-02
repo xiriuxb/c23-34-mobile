@@ -4,9 +4,10 @@ import SimpleButton from "@/components/auth/SimpleButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
-import { Href, router, Stack, usePathname } from "expo-router";
-import { useContext, useEffect, useState } from "react";
+import { Href, router, Stack } from "expo-router";
+import { useContext } from "react";
 import { View } from "react-native";
+import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
 
 const nextRoutes: Record<string, Href> = {
   personal: "/auth/(register)/register/data",
@@ -15,21 +16,16 @@ const nextRoutes: Record<string, Href> = {
 
 export default function RegisterLayout() {
   const { control, getValues } = useContext(RegisterUserContext);
-  const segments = usePathname();
-  const [path, setPath] = useState("personal");
-
-  useEffect(() => {
-    setPath(segments.split("/").pop()!);
-  }, [segments]);
+  const lastSegmentPath = useLastRouteSegment();
 
   const handleNext = () => {
-    if (path === "data") {
+    if (lastSegmentPath === "data") {
       //Submit form
       console.log(getValues!())
-      router.replace(nextRoutes[path]);
+      router.replace(nextRoutes[lastSegmentPath]);
       return;
     }
-    router.push(nextRoutes[path]);
+    router.push(nextRoutes[lastSegmentPath]);
   };
 
   return (
@@ -46,13 +42,13 @@ export default function RegisterLayout() {
             width: "100%",
           }}
         >
-          <RegisterDots currentUri={path} uris={["personal", "data"]} />
+          <RegisterDots currentUri={lastSegmentPath} uris={["personal", "data"]} />
           <SimpleButton
             onPress={control!.handleSubmit(handleNext)}
             style={{ backgroundColor: Colors.light.text, width: "100%" }}
           >
             <ThemedText style={{ fontWeight: 700, color: Colors.dark.tint }}>
-              {path === "personal" ? "Siguiente" : "Finalizar"}
+              {lastSegmentPath === "personal" ? "Siguiente" : "Finalizar"}
             </ThemedText>
           </SimpleButton>
         </View>
