@@ -1,4 +1,4 @@
-import RegisterUserProvider from "@/app/contexts/RegisterUserProvider";
+import RegisterUserProvider from "@/contexts/RegisterUserProvider";
 import HeaderRegister from "@/components/auth/HeaderRegister";
 import { ThemedView } from "@/components/ThemedView";
 import { Href, router, Stack, usePathname } from "expo-router";

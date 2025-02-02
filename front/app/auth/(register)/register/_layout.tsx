@@ -1,4 +1,4 @@
-import RegisterUserContext from "@/app/contexts/RegisterUserContext";
+import RegisterUserContext from "@/contexts/RegisterUserContext";
 import RegisterDot from "@/components/auth/RegisterDot";
 import SimpleButton from "@/components/auth/SimpleButton";
 import { ThemedText } from "@/components/ThemedText";
