@@ -39,7 +39,9 @@ export default function LoginView() {
   };
 
   const handleSubmitForm = () => {
-    router.replace("/auth/Dashboard");
+    if(isValid){
+      router.replace("/dashboard");
+    }
   };
 
   return (
