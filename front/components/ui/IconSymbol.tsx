@@ -21,7 +21,12 @@ const MAPPING = {
   "phone.fill": "local-phone",
   "person.2": "person-outline",
   "arrow.backward": "arrow-back",
-  "key": "key"
+  "key": "key",
+  "arrow.right.square": "logout",
+  "bell":"notifications-none",
+  "gear": "settings",
+  "dpad.right.fill": "keyboard-arrow-right",
+  "pencil":"edit"
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],
@@ -33,6 +38,9 @@ const MAPPINGCOMU = {
   shield: "shield-key-outline",
   "key.card": "card-account-details-outline",
   mail: "email-outline",
+  "checkmark.message":"message-alert-outline",
+  "creditcard.trianglebadge.exclamationmark":"credit-card-check-outline",
+  "gift":"github"
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],
