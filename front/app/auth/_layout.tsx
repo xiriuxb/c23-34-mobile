@@ -1,13 +1,7 @@
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 
 export default function AuthLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="login"
-        options={{ headerShown: false, title: "Login" }}
-      />
-      <Stack.Screen name="(register)" options={{ headerShown: false }} />
-    </Stack>
+    <Slot />
   );
 }
