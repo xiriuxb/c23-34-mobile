@@ -7,7 +7,7 @@ export default function Userlayout() {
     <ThemedView style={{paddingHorizontal:28, padding:20, height:"100%", width:"100%"}}>
       <UserProfileHeader handleBack={()=>{}} />
       <Stack>
-        <Stack.Screen name="profile" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="settings" options={{ headerShown: false }} />
         <Stack.Screen name="personal-info" options={{ headerShown: false }} />
         <Stack.Screen name="support" options={{ headerShown: false }} />
