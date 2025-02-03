@@ -18,8 +18,6 @@ const AllCards = () => {
 
 	return (
 		<Animated.FlatList
-			entering={FadeInUp}
-			exiting={FadeOutUp}
 			data={data}
 			contentContainerStyle={{
 				paddingBottom: insets.bottom + 320,
