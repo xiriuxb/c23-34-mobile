@@ -23,7 +23,7 @@ export default function PersonalInfoView() {
         <IconSymbol name="person.2" color={ColorsBase.cyan500} />
         <ThemedText type="subtitle">Información Personal</ThemedText>
       </View>
-      <View style={{ height: "100%", gap: 20, paddingVertical: 20, width:700 }}>
+      <View style={{ height: "100%", width:"100%", maxWidth:700, gap: 20, paddingVertical: 20}}>
         <MyInputText
           readOnly
           name="userName"

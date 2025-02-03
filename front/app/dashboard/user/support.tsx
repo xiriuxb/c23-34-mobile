@@ -1,3 +1,4 @@
+import { baseStyle } from "@/app/auth/login";
 import authStyles from "@/components/auth/authStyles";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -69,14 +70,14 @@ const team: Person[] = [
 
 export default function SupportView() {
   return (
-    <ThemedView>
+    <ThemedView style={styles.viewContainer}>
       <View style={authStyles.regTitleContainer}>
         <IconSymbol name="person.2" color={ColorsBase.cyan500} />
         <ThemedText type="subtitle">Equipo</ThemedText>
       </View>
       <FlatList
         data={team}
-        style={{ height: "100%" }}
+        style={{width:"100%", maxWidth:700}}
         renderItem={({ item }: { item: Person }) => (
           <PersonCard person={item} />
         )}
@@ -96,8 +97,7 @@ function PersonCard({ person }: { person: Person }) {
         padding: 10,
         marginVertical: 5,
         flexDirection: "row",
-        gap: 20,
-        flex: 1,
+        gap: 20, 
       }}
     >
       <Image
@@ -149,5 +149,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 66,
     height: 58,
+  },
+  viewContainer: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
   },
 });

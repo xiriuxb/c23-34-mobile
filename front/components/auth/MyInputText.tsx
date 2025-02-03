@@ -56,9 +56,10 @@ export default function MyInputText<T extends FieldValues>({
   const inputRef = useRef<TextInput | null>(null);
 
   const focusInput = () => {
-    if(readOnly) return;
-    setFfocus(true);
-    inputRef.current?.focus();
+    if (!readOnly) {
+      setFfocus(true);
+      inputRef.current?.focus();
+    }
   };
   const blurInput = () => {
     setFfocus(false);
@@ -103,7 +104,9 @@ export default function MyInputText<T extends FieldValues>({
           <TextInput
             readOnly={readOnly}
             {...rest}
-            onFocus={() => setFfocus(true)}
+            onFocus={() => {
+              if (!readOnly) setFfocus(true);
+            }}
             onBlur={blurInput}
             value={field.value}
             onChangeText={field.onChange}
