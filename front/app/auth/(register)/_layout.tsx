@@ -1,9 +1,9 @@
-import RegisterUserProvider from "@/app/contexts/RegisterUserProvider";
+import RegisterUserProvider from "@/contexts/RegisterUserProvider";
 import HeaderRegister from "@/components/auth/HeaderRegister";
 import { ThemedView } from "@/components/ThemedView";
-import { Href, router, Stack, usePathname } from "expo-router";
-import { useEffect, useState } from "react";
+import { Href, router, Stack} from "expo-router";
 import { View } from "react-native";
+import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
 
 const backRoutes: Record<string, Href> = {
   personal: "/auth/login",
@@ -12,15 +12,10 @@ const backRoutes: Record<string, Href> = {
 };
 
 export default function RegisterLayout() {
-  const segments = usePathname();
-  const [path, setPath] = useState("personal");
-
-  useEffect(() => {
-    setPath(segments.split("/").pop()!);
-  }, [segments]);
+  const lastSegmentPath = useLastRouteSegment();
 
   const handleBack = () => {
-    router.replace(backRoutes[path]);
+    router.replace(backRoutes[lastSegmentPath]);
   };
 
   return (
