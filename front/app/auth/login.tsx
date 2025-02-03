@@ -101,7 +101,7 @@ export default function LoginView() {
             </ThemedLink>
           </ThemedText>
           <ThemedText>
-            <ThemedLink href={"/dashboard/user/profile"}>¿Olvidaste tu Contraseña?</ThemedLink>
+            <ThemedLink href={"/"}>¿Olvidaste tu Contraseña?</ThemedLink>
           </ThemedText>
         </View>
       </ScrollView>

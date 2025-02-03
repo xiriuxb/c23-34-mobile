@@ -5,35 +5,36 @@ import Animated from "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
+import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
 
 // Based on /auth/Dashboard code, by GioPati
 
 const Dashboard = () => {
+  const lastSegment = useLastRouteSegment();
   const theme = useColorScheme() ?? "light";
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#ccedeb" }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: lastSegment == "dashboard" ? "#ccedeb" : "#ffffff",
+      }}
+    >
       <Tabs
         initialRouteName="index"
         screenOptions={() => ({
           headerShown: false,
           tabBarActiveTintColor: ColorsBase.cyan500,
           sceneStyle: {
-            backgroundColor: "#ccedeb",
-            paddingHorizontal: 15,
+            backgroundColor: "#ffffff",
           },
-          tabBarItemStyle: {
-            alignItems: "center",
-            flexDirection: "row",
-            
-          },
+          tabBarIconStyle: { flex: 1 },
           tabBarStyle: styles.barStyles,
         })}
       >
         <Tabs.Screen
           name="index"
           options={{
-            headerShown: false,
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
               <TabBarIcon iconName="home-filled" isFocused={focused} />
@@ -61,6 +62,7 @@ const Dashboard = () => {
         <Tabs.Screen
           name="user"
           options={{
+            href: "/dashboard/user",
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
               <TabBarIcon iconName="account-circle" isFocused={focused} />
