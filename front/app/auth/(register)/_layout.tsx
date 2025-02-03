@@ -1,21 +1,21 @@
 import RegisterUserProvider from "@/contexts/RegisterUserProvider";
 import HeaderRegister from "@/components/auth/HeaderRegister";
 import { ThemedView } from "@/components/ThemedView";
-import { Href, router, Stack} from "expo-router";
+import { router, Slot } from "expo-router";
 import { View } from "react-native";
 import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
 
-const backRoutes: Record<string, Href> = {
-  personal: "/auth/login",
-  data: "/auth/register/personal",
-  "confirm-mail": "/auth/login",
-};
-
 export default function RegisterLayout() {
-  const lastSegmentPath = useLastRouteSegment();
+
+  const lastSegment = useLastRouteSegment();
 
   const handleBack = () => {
-    router.replace(backRoutes[lastSegmentPath]);
+    if(lastSegment==="confirm-mail"){
+      router.dismissAll()
+      router.replace("/auth/login")
+      return;
+    }
+    router.back()
   };
 
   return (
@@ -29,13 +29,7 @@ export default function RegisterLayout() {
       >
         <HeaderRegister handleBack={handleBack} />
         <View style={{ flex: 1, width: "100%" }}>
-          <Stack>
-            <Stack.Screen name="register" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="confirm-mail"
-              options={{ headerShown: false }}
-            />
-          </Stack>
+          <Slot />
         </View>
       </ThemedView>
     </RegisterUserProvider>
