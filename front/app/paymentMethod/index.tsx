@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, Pressable} from 'react-native';
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/paymentMethod/Card';
 import {Link} from 'expo-router';
@@ -40,6 +40,13 @@ const indexView = () => {
 
     return (
         <View style={styles.container}>
+            <View style={styles.headerContainer}>
+                <Link href = "/" asChild>
+                    <Text>Back</Text>
+                </Link>
+                <Text style={styles.headerText}>Metodos de pago</Text>
+            </View>
+            <View style={styles.cardContainer}>
             {cards.length > 0 ? (
                 cards.map((c) => (
                     <Card key={c.id} number={c.number} brand = {c.brand} id = {c.id}/> 
@@ -47,7 +54,14 @@ const indexView = () => {
             ) : (
                 <Text>The are no cards registered</Text>
             )}
-            <Link href="/paymentMethod/add" style = {styles.link}> Add Card</Link>
+            </View>
+            <Link href="/paymentMethod/add" asChild > 
+               <View style={styles.btn}>
+                    <Pressable  style = {({pressed}) => [pressed && styles.pressed]} >
+                        <Text style = {styles.text}>+ Agregar una nueva tarjeta</Text>
+                    </Pressable>
+               </View>
+            </Link>
           
         </View>
     );
@@ -57,11 +71,37 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         padding: 20,
-        gap: 10,
+        backgroundColor: '#CCEDEB'
     },
-    link : {
-        color : 'white',
-    }
+    headerContainer : {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 20
+    },
+    cardContainer : {
+        gap: 10,
+        marginBottom: 20
+    },
+    headerText: {
+        color : '#080808',
+        fontWeight: 'bold',
+        fontSize: 20
+    },
+    btn: {
+        backgroundColor: "#33B7AD",
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        alignItems: "center",
+      },
+    pressed: {
+        opacity: 0.8,
+      },
+    text: {
+        color: "#fff",
+      },
 });
 
 export default indexView;
