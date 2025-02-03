@@ -3,7 +3,7 @@ import MyInputText from "./MyInputText";
 import { ThemedText } from "../ThemedText";
 import authStyles from "./authStyles";
 import { useContext, useRef } from "react";
-import RegisterUserContext from "@/app/contexts/RegisterUserContext";
+import RegisterUserContext from "@/contexts/RegisterUserContext";
 
 export default function RegisterFormPersonal() {
   const {control} = useContext(RegisterUserContext);
@@ -15,7 +15,7 @@ export default function RegisterFormPersonal() {
       <View style={authStyles.formGroup}>
         <ThemedText style={authStyles.label}>Nombre</ThemedText>
         <MyInputText
-          control={control}
+          control={control!}
           name="userName"
           iconName="person.2"
           placeholder="Ingresa tu nombre"
@@ -26,7 +26,7 @@ export default function RegisterFormPersonal() {
       <View style={authStyles.formGroup}>
         <ThemedText style={authStyles.label}>Apellido</ThemedText>
         <MyInputText
-          control={control}
+          control={control!}
           name="userLastName"
           iconName="person.2"
           placeholder="Ingresa tu apellido"
@@ -38,7 +38,7 @@ export default function RegisterFormPersonal() {
       <View style={authStyles.formGroup}>
         <ThemedText style={authStyles.label}>Número ID/DNI</ThemedText>
         <MyInputText
-          control={control}
+          control={control!}
           name="userDni"
           iconName="key.card"
           placeholder="Ingresa tu apellido"
