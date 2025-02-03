@@ -1,12 +1,156 @@
-import {Text,StyleSheet} from 'react-native';
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 
 export const CardForm = () => {
-    return (
-        <Text style={styles.text}>Card Form</Text>
-    )
-}
+  const [cardNumber, setCardNumber] = useState("");
+  const [expirationDate, setExpirationDate] = useState("");
+  const [securityCode, setSecurityCode] = useState("");
+  const [cardholderName, setCardholderName] = useState("");
+  const [identificationType, setIdentificationType] = useState("DNI");
+  const [identificationNumber, setIdentificationNumber] = useState("");
+  const [email, setEmail] = useState("");
+
+  return (
+    <View style={styles.container}>
+
+      <Text style={styles.label}>Número de Tarjeta</Text>
+      <TextInput 
+        style={styles.input} 
+        value={cardNumber} 
+        onChangeText={setCardNumber} 
+        keyboardType="numeric" 
+        placeholder="•••• •••• •••• ••••" 
+      />
+
+      <View style={styles.row}>
+        <View style={styles.halfInputContainer}>
+          <Text style={styles.label}>Fecha de Expiración</Text>
+          <TextInput 
+            style={styles.input} 
+            value={expirationDate} 
+            onChangeText={setExpirationDate} 
+            placeholder="MM/YY" 
+          />
+        </View>
+        <View style={styles.halfInputContainer}>
+          <Text style={styles.label}>Código de Seguridad</Text>
+          <TextInput 
+            style={styles.input} 
+            value={securityCode} 
+            onChangeText={setSecurityCode} 
+            keyboardType="numeric" 
+            placeholder="•••" 
+          />
+        </View>
+      </View>
+
+      <Text style={styles.label}>Nombre del Titular</Text>
+      <TextInput 
+        style={styles.input} 
+        value={cardholderName} 
+        onChangeText={setCardholderName} 
+        placeholder="Nombre Completo" 
+      />
+
+      <Text style={styles.label}>Tipo de Documento</Text>
+      <View style={styles.pickerContainer}>
+        <Picker 
+          selectedValue={identificationType} 
+          onValueChange={setIdentificationType} 
+          style={styles.picker}
+        >
+          <Picker.Item label="DNI" value="DNI" />
+          <Picker.Item label="Pasaporte" value="PASSPORT" />
+        </Picker>
+      </View>
+
+      <Text style={styles.label}>Número de Documento</Text>
+      <TextInput 
+        style={styles.input} 
+        value={identificationNumber} 
+        onChangeText={setIdentificationNumber} 
+        keyboardType="numeric" 
+        placeholder="12345678" 
+      />
+
+      <Text style={styles.label}>Correo Electrónico</Text>
+      <TextInput 
+        style={styles.input} 
+        value={email} 
+        onChangeText={setEmail} 
+        keyboardType="email-address" 
+        placeholder="correo@ejemplo.com" 
+      />
+
+      <TouchableOpacity style={styles.button} onPress={() => console.log("Tarjeta registrada...")}>
+        <Text style={styles.buttonText}>Registrar Tarjeta</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
-    text: {
-        color : 'white',
-    }
-})
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+    justifyContent: "center",
+    maxWidth: 400,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#555",
+    marginBottom: 5,
+  },
+  input: {
+    backgroundColor: "#fff",
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginBottom: 12,
+    fontSize: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  halfInputContainer: {
+    width: "48%",
+  },
+  pickerContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    overflow: "hidden",
+  },
+  picker: {
+    height: 50,
+  },
+  button: {
+    backgroundColor: "#28a745",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
+
+export default CardForm;
