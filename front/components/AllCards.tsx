@@ -9,10 +9,10 @@ const AllCards = () => {
 	const insets = useSafeAreaInsets()
 	const data = [
 		{
-			Type: 'Tarjeta Credito',
+			Type: 'Debito',
 		},
 		{
-			Type: 'Tarjeta Credito',
+			Type: 'Credito',
 		},
 	]
 
@@ -27,8 +27,11 @@ const AllCards = () => {
 			}}
 			renderItem={({ item }) => (
 				<LinearGradient
-					// Button Linear Gradient
-					colors={['#0072ff', '#0048b8']}
+					colors={
+						item.Type !== 'Debito'
+							? ['#0048b8', '#0072ff']
+							: ['#148A14', '#47B747']
+					}
 					start={{ x: 0, y: 0 }}
 					end={{ x: 1, y: 1 }}
 					style={styles.card}
@@ -41,7 +44,7 @@ const AllCards = () => {
 						/>
 						<IconButton icon='pencil' iconColor='white' size={20} />
 					</View>
-					<Text style={styles.title}>{item.Type}</Text>
+					<Text style={styles.title}>Tarjeta de {item.Type}</Text>
 					<View style={styles.dottedLine} />
 					<View style={styles.footer}>
 						<Text style={styles.footerText}>
@@ -92,8 +95,8 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 	},
 	footer: {
-		flexDirection: 'row-reverse',
-		justifyContent: 'space-between',
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
 		alignItems: 'center',
 	},
 	footerText: {
