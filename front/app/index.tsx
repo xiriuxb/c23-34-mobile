@@ -5,17 +5,25 @@ import IconWater from "@/assets/svgs/icon-water";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { ColorsBase } from "@/constants/Colors";
+import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 import { scaleHeight, scaleWidth } from "@/constants/Scale";
+import { useAuthStore } from "@/hooks/useAuthStore";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { Platform, StyleSheet, ViewProps } from "react-native";
 import Animated, { Easing, SlideInDown } from "react-native-reanimated";
 
 export default function Welocome() {
+  const {checkAuthToken, status} = useAuthStore()
   useEffect(() => {
     setTimeout(
       () => {
-        router.replace("/auth/login");
+        if(status === AUTH_STATUS.not_authenticated){
+          router.navigate("/auth/login");
+          return;
+        } else {
+          checkAuthToken();
+        }
       },
       Platform.OS == "web" ? 3000 : 2500
     );

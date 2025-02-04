@@ -6,18 +6,18 @@ import { useColorScheme } from '@/hooks/useColorScheme.web'
 import IconNotifications from '@/assets/svgs/icon-notifications'
 import { useRouter } from 'expo-router'
 import { ThemedText } from '../ThemedText'
+import { useAuthStore } from '@/hooks/useAuthStore'
 
 // based on /components/HeaderApp by GioPati
 
 const HeaderApp = () => {
-	const data = {
-		nombre: 'Nombre Apellido',
-	}
 	const router = useRouter()
-	const theme = useColorScheme() ?? 'light'
+	const theme = useColorScheme() ?? 'light';
+	const { user } = useAuthStore();
+	
 	return (
 		<Card.Title
-			title={<ThemedText type='subtitle'>{data.nombre}</ThemedText>}
+			title={<ThemedText type='subtitle'>{`${user.userName} ${user.userLastName}`}</ThemedText>}
 			subtitle={
 				<TouchableOpacity
 					onPress={() =>

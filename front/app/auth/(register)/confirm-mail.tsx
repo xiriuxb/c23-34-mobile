@@ -5,6 +5,8 @@ import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { ColorsBase } from "@/constants/Colors";
 import { scaleMin, windowHeight, windowWidth } from "@/constants/Scale";
+import RegisterUserContext from "@/contexts/RegisterUserContext";
+import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { ZoomIn, Easing, Keyframe } from "react-native-reanimated";
 
@@ -24,6 +26,8 @@ const keyframePlanes = new Keyframe({
 });
 
 export default function ConfirmEmail() {
+
+  const {getValues} = useContext(RegisterUserContext);
   return (
     <ThemedView style={{ height: "100%", overflow: "hidden" }}>
       <View style={{ gap: 20 }}>
@@ -40,7 +44,7 @@ export default function ConfirmEmail() {
             color: ColorsBase.neutral600,
           }}
         >
-          Hemos enviado un correo a <ThemedText>{SAMPLE_MAIL}</ThemedText> con
+          Hemos enviado un correo a <ThemedText>{getValues!("userEmail")}</ThemedText> con
           un enlace para confirmar la cuenta.
         </ThemedText>
       </View>
