@@ -5,7 +5,7 @@ import { Control, UseFormGetValues } from "react-hook-form";
 export const initialRegValues: RegDataVals = {
   userName: "",
   userLastName: "",
-  userDni: "",
+  userDNI: "",
   userPassword: "",
   userEmail: "",
   userPasswordConf: "",

@@ -39,7 +39,7 @@ export default function RegisterFormPersonal() {
         <ThemedText style={authStyles.label}>Número ID/DNI</ThemedText>
         <MyInputText
           control={control!}
-          name="userDni"
+          name="userDNI"
           iconName="key.card"
           placeholder="Ingresa tu DNI"
           myref={dniRef}

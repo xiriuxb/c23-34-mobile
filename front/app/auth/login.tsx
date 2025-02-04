@@ -63,9 +63,9 @@ export default function LoginView() {
           </ThemedText>
         </View>
         <SafeAreaView style={[authStyles.form, baseStyle.form]}>
-        {!!errorMessage && <ThemedView style={authStyles.formBackError}>
+        {!!errorMessage.on && errorMessage.on == "auth"&& <ThemedView style={authStyles.formBackError}>
           <ThemedText>
-            {errorMessage}
+            {errorMessage.message}
           </ThemedText>
         </ThemedView>}
           <MyInputText<LoginForm>
