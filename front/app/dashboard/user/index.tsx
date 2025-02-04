@@ -4,6 +4,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import UserProfileAvatar from "@/components/user/UserProfileAvatar";
 import { ColorsBase } from "@/constants/Colors";
+import { useAuthStore } from "@/hooks/useAuthStore";
 import fontStyles from "@/styles/fontStyles";
 import { StyleSheet, View } from "react-native";
 
@@ -16,6 +17,7 @@ const userExample = {
 };
 
 export default function UserProfile() {
+  const {startLogout} = useAuthStore()
   return (
     <ThemedView style={baseStyle.viewContainer}>
       <UserProfileAvatar
@@ -31,7 +33,7 @@ export default function UserProfile() {
           <DataRow label="Teléfono" message={userExample.userPhone} />
           <DataRow label="DNI" message={userExample.userDni} />
         </View>
-        <SimpleButton style={baseStyle.closeButton}>
+        <SimpleButton onPress={()=>startLogout()} style={baseStyle.closeButton}>
           <ThemedText
             style={[fontStyles.bold, { color: ColorsBase.neutral50 }]}
           >
