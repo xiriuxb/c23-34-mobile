@@ -1,18 +1,27 @@
 import { Colors, ColorsBase } from "@/constants/Colors";
-import { memo } from "react";
-import { StyleSheet } from "react-native";
+import { memo, useEffect } from "react";
+import { Modal, StyleSheet } from "react-native";
 import Animated from "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import LoadingScreen from "../loading";
+import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 
 // Based on /auth/Dashboard code, by GioPati
 
 const Dashboard = () => {
   const lastSegment = useLastRouteSegment();
   const theme = useColorScheme() ?? "light";
+  const { checkAuthToken, status } = useAuthStore();
+
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -20,6 +29,13 @@ const Dashboard = () => {
         backgroundColor: lastSegment == "home" ? "#ccedeb" : "#ffffff",
       }}
     >
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={status == AUTH_STATUS.checking}
+      >
+        <LoadingScreen />
+      </Modal>
       <Tabs
         initialRouteName="home"
         screenOptions={() => ({
@@ -35,7 +51,7 @@ const Dashboard = () => {
         <Tabs.Screen
           name="home"
           options={{
-            href:"/dashboard/home",
+            href: "/dashboard/home",
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
               <TabBarIcon iconName="home-filled" isFocused={focused} />
@@ -78,9 +94,9 @@ const Dashboard = () => {
 const styles = StyleSheet.create({
   barStyles: {
     borderRadius: 32,
-    marginHorizontal:8,
-    marginBottom:8,
-    position:"absolute",
+    marginHorizontal: 8,
+    marginBottom: 8,
+    position: "absolute",
     backgroundColor: "#333333",
     justifyContent: "center",
     height: 64,
