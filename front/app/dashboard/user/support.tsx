@@ -129,7 +129,7 @@ function PersonCard({ person }: { person: Person }) {
         </View>
         {person.social &&
           person.social.map((pers) => (
-            <TouchableOpacity>
+            <TouchableOpacity key={pers.name}>
               <IconSymbol name="gift" color={"black"} />
             </TouchableOpacity>
           ))}
