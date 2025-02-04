@@ -11,7 +11,7 @@ export type LoginForm = {
 export type RegDataVals = {
     userName: string;
     userLastName: string;
-    userDni: string;
+    userDNI: string;
     userPassword: string;
     userEmail: string;
     userPasswordConf: string;
