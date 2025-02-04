@@ -41,7 +41,7 @@ export default function RegisterFormPersonal() {
           control={control!}
           name="userDni"
           iconName="key.card"
-          placeholder="Ingresa tu apellido"
+          placeholder="Ingresa tu DNI"
           myref={dniRef}
         />
       </View>
