@@ -8,6 +8,8 @@ import { Href, router, Slot } from "expo-router";
 import { useContext } from "react";
 import { View } from "react-native";
 import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
+import { apiRegister } from "@/api/auth.service";
+import { useAuthStore } from "@/hooks/useAuthStore";
 
 const nextRoutes: Record<string, Href> = {
   personal: "/auth/(register)/register/reg-data",
@@ -29,12 +31,14 @@ function RegFooter() {
   const { control, getValues } = useContext(RegisterUserContext);
   const lastSegment = useLastRouteSegment();
 
-  const handleNext = () => {
+  const {startRegister} = useAuthStore();
+
+  const handleNext = async () => {
     if (lastSegment == "personal") {
       router.push(nextRoutes[lastSegment]);
       return;
     }
-    router.replace(nextRoutes[lastSegment]);
+    await startRegister(getValues!());
   };
   return (
     <View
