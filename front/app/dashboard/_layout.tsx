@@ -17,11 +17,11 @@ const Dashboard = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: lastSegment == "dashboard" ? "#ccedeb" : "#ffffff",
+        backgroundColor: lastSegment == "home" ? "#ccedeb" : "#ffffff",
       }}
     >
       <Tabs
-        initialRouteName="index"
+        initialRouteName="home"
         screenOptions={() => ({
           headerShown: false,
           tabBarActiveTintColor: ColorsBase.cyan500,
@@ -33,8 +33,9 @@ const Dashboard = () => {
         })}
       >
         <Tabs.Screen
-          name="index"
+          name="home"
           options={{
+            href:"/dashboard/home",
             tabBarShowLabel: false,
             tabBarIcon: ({ focused }) => (
               <TabBarIcon iconName="home-filled" isFocused={focused} />
@@ -76,7 +77,10 @@ const Dashboard = () => {
 
 const styles = StyleSheet.create({
   barStyles: {
-    borderRadius: 24,
+    borderRadius: 32,
+    marginHorizontal:8,
+    marginBottom:8,
+    position:"absolute",
     backgroundColor: "#333333",
     justifyContent: "center",
     height: 64,

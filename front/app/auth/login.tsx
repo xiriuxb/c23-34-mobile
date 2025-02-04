@@ -28,7 +28,11 @@ const loginFormDefaultValues: LoginForm = {
 };
 
 export default function LoginView() {
-  const { control, handleSubmit, formState:{isValid} } = useForm<LoginForm>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<LoginForm>({
     defaultValues: loginFormDefaultValues,
   });
   const [hidePassword, setHidePassword] = useState(true);
@@ -39,8 +43,8 @@ export default function LoginView() {
   };
 
   const handleSubmitForm = () => {
-    if(isValid){
-      router.replace("/dashboard");
+    if (isValid) {
+      router.navigate("/dashboard/home");
     }
   };
 
@@ -50,7 +54,8 @@ export default function LoginView() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={{ maxHeight: 900 }}
-        contentContainerStyle={baseStyle.scrollContainer}>
+        contentContainerStyle={baseStyle.scrollContainer}
+      >
         <View>
           <ThemedText style={baseStyle.title}>Ingresa a tu cuenta</ThemedText>
           <ThemedText style={baseStyle.subtitle}>
@@ -70,7 +75,8 @@ export default function LoginView() {
             onSubmitEditing={() => {
               passwordRef?.current?.focus();
             }}
-            rules={{ required: "Requerido" }}></MyInputText>
+            rules={{ required: "Requerido" }}
+          ></MyInputText>
           <MyInputText<LoginForm>
             control={control}
             id="password"
@@ -83,11 +89,13 @@ export default function LoginView() {
             handleIconAction={handleHidePassword}
             onSubmitEditing={handleSubmit(handleSubmitForm)}
             rules={{ required: "Requerido" }}
-            myref={passwordRef}></MyInputText>
+            myref={passwordRef}
+          ></MyInputText>
 
           <SimpleButton
             onPress={handleSubmit(handleSubmitForm)}
-            style={{ backgroundColor: Colors.light.text }}>
+            style={{ backgroundColor: Colors.light.text }}
+          >
             <ThemedText style={{ fontWeight: 700, color: Colors.dark.tint }}>
               Iniciar sesión
             </ThemedText>
@@ -115,7 +123,8 @@ function LoginHeader() {
       style={{
         paddingVertical: 40,
         paddingHorizontal: 16,
-      }}>
+      }}
+    >
       <Image
         source={require("@/assets/images/app-icon.png")}
         style={{ height: 19, width: 63 }}

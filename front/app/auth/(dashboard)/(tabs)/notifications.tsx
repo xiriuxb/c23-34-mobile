@@ -1,35 +1,31 @@
 import React, { useState } from "react";
+import HeaderApp from "@/components/HeaderApp";
 import { ThemedText } from "@/components/ThemedText";
 import { ColorsBase } from "@/constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View, FlatList } from "react-native";
 import Notification from "@/components/Notification";
-import HeaderApp from "@/components/dashboard/HeaderApp";
-
-// based on /(auth)/(dashboard)/(tabs)/notifications by GioPati
-
-const data = [
-  {
-    title: "!Tu factura del gas esta por vencer",
-    subtitle:
-      "Faltan 4 dias para el vencimiento de tu factura el monto de : $ 20.000",
-    time: "Hace 2 horas",
-    status: "Pendiente",
-  },
-  {
-    title: "!Tu factura del gas esta por vencer",
-    subtitle:
-      "Faltan 4 dias para el vencimiento de tu factura el monto de : $ 20.000",
-    time: "Hace 2 horas",
-    status: "Atrasado",
-  },
-];
 
 const notifications = () => {
   const [selected, setSelected] = useState("Todos");
+  const data = [
+    {
+      title: "!Tu factura del gas esta por vencer",
+      subtitle:
+        "Faltan 4 dias para el vencimiento de tu factura el monto de : $ 20.000",
+      time: "Hace 2 horas",
+      status: "Pendiente",
+    },
+    {
+      title: "!Tu factura del gas esta por vencer",
+      subtitle:
+        "Faltan 4 dias para el vencimiento de tu factura el monto de : $ 20.000",
+      time: "Hace 2 horas",
+      status: "Atrasado",
+    },
+  ];
   return (
     <FlatList
-    contentContainerStyle={{padding:15}}
       data={[]}
       renderItem={() => null}
       ListHeaderComponent={

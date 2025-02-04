@@ -5,60 +5,60 @@ import { Text, View } from 'react-native'
 import { Button, Card, Icon } from 'react-native-paper'
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ThemedText } from './ThemedText'
 import IconWater from '@/assets/svgs/icon-water'
 import IconElectricity from '@/assets/svgs/icon-electricity'
 import IconFlame from '@/assets/svgs/icon-flame'
-import { ThemedView } from './ThemedView'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { router } from 'expo-router'
-import IconStatus from './IconStatus'
+import { ThemedView } from '../ThemedView'
+import { ThemedText } from '../ThemedText'
+import IconStatus from '../IconStatus'
 
-const ServicesClient = () => {
+// based on /components/ServicesClient by GioPati
 	/* 
  Data Example 
  */
-	const data = [
-		{
-			type: 'Electricidad',
-			Empresa: 'EDENOR',
-			Client: '88698235',
-			status: 'Atrasado',
-			fechVen: '01/01/2025',
-			totalPagar: '75.900',
-		},
-		{
-			type: 'Agua',
-			Empresa: 'EDENOR',
-			Client: '88698235',
-			status: 'Pendiente',
-			fechVen: '01/01/2025',
-			totalPagar: '75.900',
-		},
-		{
-			type: 'Gas',
-			Empresa: 'MetroGas',
-			Client: '88698235',
-			status: 'Pagado',
-			fechVen: '01/01/2025',
-			totalPagar: '75.900',
-		},
-		{
-			type: 'Internet',
-			Empresa: 'Movistar',
-			Client: '88698235',
-			status: 'Pagado',
-			fechVen: '01/01/2025',
-			totalPagar: '75.900',
-		},
-	]
+ const data = [
+	{
+		type: 'Electricidad',
+		Empresa: 'EDENOR',
+		Client: '88698235',
+		status: 'Atrasado',
+		fechVen: '01/01/2025',
+		totalPagar: '75.900',
+	},
+	{
+		type: 'Agua',
+		Empresa: 'EDENOR',
+		Client: '88698235',
+		status: 'Pendiente',
+		fechVen: '01/01/2025',
+		totalPagar: '75.900',
+	},
+	{
+		type: 'Gas',
+		Empresa: 'MetroGas',
+		Client: '88698235',
+		status: 'Pagado',
+		fechVen: '01/01/2025',
+		totalPagar: '75.900',
+	},
+	{
+		type: 'Internet',
+		Empresa: 'Movistar',
+		Client: '88698235',
+		status: 'Pagado',
+		fechVen: '01/01/2025',
+		totalPagar: '75.900',
+	},
+]
+
+const ServicesClient = () => {
 
 	const theme = useColorScheme() ?? 'light'
 	const insets = useSafeAreaInsets()
 	return (
 		<Animated.FlatList
-			entering={FadeInUp}
-			exiting={FadeOutUp}
 			data={data}
 			ListEmptyComponent={() => (
 				<ThemedView
@@ -229,7 +229,7 @@ const ServicesClient = () => {
 								}}
 								onPress={() =>
 									router.push(
-										'/auth/(dashboard)/(screens)/viewDetails'
+										`/dashboard/home/payment/${item.Client}`
 									)
 								}
 							>

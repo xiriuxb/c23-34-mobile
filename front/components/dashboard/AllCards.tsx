@@ -5,6 +5,7 @@ import { IconButton } from 'react-native-paper'
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+// based on /components/AllCards by GioPati
 const AllCards = () => {
 	const insets = useSafeAreaInsets()
 	const data = [
@@ -50,7 +51,7 @@ const AllCards = () => {
 							<Text style={styles.boldText}>4583</Text>
 						</Text>
 						<Image
-							source={require('../assets/images/visa-blue-logo-19529.png')}
+							source={require('../../assets/images/visa-blue-logo-19529.png')}
 							style={styles.logo}
 						/>
 					</View>

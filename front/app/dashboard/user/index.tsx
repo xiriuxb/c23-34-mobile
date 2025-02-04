@@ -88,7 +88,7 @@ const baseStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     gap: 8,
-    paddingVertical: 18,
+    paddingVertical: 16,
     borderWidth: 1,
     borderColor: ColorsBase.red400,
   },
