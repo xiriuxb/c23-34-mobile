@@ -1,13 +1,13 @@
 import { Colors, ColorsBase } from '@/constants/Colors'
 import React, { memo } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Appbar, Avatar, Button, Card, IconButton } from 'react-native-paper'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Avatar, Card } from 'react-native-paper'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
-import IconElectricity from '@/assets/svgs/icon-electricity'
 import IconNotifications from '@/assets/svgs/icon-notifications'
 import { useRouter } from 'expo-router'
-import { ThemedText } from './ThemedText'
+import { ThemedText } from '../ThemedText'
+
+// based on /components/HeaderApp by GioPati
 
 const HeaderApp = () => {
 	const data = {
@@ -21,7 +21,7 @@ const HeaderApp = () => {
 			subtitle={
 				<TouchableOpacity
 					onPress={() =>
-						router.push('/auth/(dashboard)/(tabs)/perfil')
+						router.push('/dashboard/user')
 					}
 				>
 					<ThemedText style={{ color: ColorsBase.cyan600 }}>
@@ -40,14 +40,14 @@ const HeaderApp = () => {
 				<Avatar.Image
 					{...props}
 					size={32}
-					source={require('../assets/images/IconPayFy.png')}
+					source={require('../../assets/images/IconPayFy.png')}
 				/>
 			)}
 			right={(props) => (
 				<TouchableOpacity
 					onPress={() =>
 						router.navigate(
-							'/auth/(dashboard)/(tabs)/notifications'
+							'/dashboard/notifications'
 						)
 					}
 				>

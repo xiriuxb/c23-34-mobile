@@ -1,4 +1,5 @@
-import BodyDashboard from "@/components/BodyDashboard"
+import BodyDashboard from "@/components/dashboard/BodyDashboard";
+
 export default function DashboardHome(){
     return (<BodyDashboard />)
 }

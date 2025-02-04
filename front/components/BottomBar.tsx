@@ -1,5 +1,5 @@
 import { Colors } from "@/constants/Colors";
-import Dashboard from "@/components/BodyDashboard";
+import Dashboard from "@/app/auth/(dashboard)/(tabs)/home";
 import { memo } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-paper";
