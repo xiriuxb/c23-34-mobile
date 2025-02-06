@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 
 export const useAuthStore = () => {
-    const { status, user, errorMessage } = useSelector(
+    const { status, user, errorMessage, token } = useSelector(
         (state: RootState) => state.authSlice
     );
     const dispatch = useDispatch();
@@ -81,6 +81,7 @@ export const useAuthStore = () => {
         status,
         errorMessage,
         user,
+        token,
         // All methods
         startLogin,
         checkAuthToken,

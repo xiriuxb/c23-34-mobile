@@ -26,7 +26,9 @@ const MAPPING = {
   "bell":"notifications-none",
   "gear": "settings",
   "dpad.right.fill": "keyboard-arrow-right",
-  "pencil":"edit"
+  "pencil":"edit",
+  "house.slash":"roofing",
+  "plus.app":"add"
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],
