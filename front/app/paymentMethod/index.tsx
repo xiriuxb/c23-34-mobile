@@ -1,107 +1,45 @@
-import { View, Text, StyleSheet, Pressable} from 'react-native';
-import { useState, useEffect } from 'react';
-import { Card } from '@/components/paymentMethod/Card';
-import {Link} from 'expo-router';
+import HeaderApp from "@/components/dashboard/HeaderApp";
+import { ThemedText } from "@/components/ThemedText";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { ColorsBase } from "@/constants/Colors";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
-const indexView = () => {
-
-    const [cards, setCards] = useState( [
-        {
-            id : '001',
-            number : '3456',
-            brand : 'Visa'
-        },
-        {
-            id : '002',
-            number : '3456',
-            brand : 'Mastercard'
-        }
-    ]); 
-    const token = "";
-
-    useEffect(() => {
-        const fetchCards = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/cards', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                });
-                const json = await response.json();
-                setCards(json);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchCards();
-    }, []);
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <Link href = "/" asChild>
-                    <Text>Back</Text>
-                </Link>
-                <Text style={styles.headerText}>Metodos de pago</Text>
+export default function NewPaymentMethod() {
+  return (
+    <View style={{ flex: 1, width: "100%", height: "100%", padding: 15, backgroundColor:ColorsBase.cyan100 }}>
+      <View style={{ paddingVertical: 25, gap: 16, maxWidth:900 }}>
+            <TouchableOpacity style={{width:30, height:30}} onPress={() => router.back()}>
+                <IconSymbol
+                    name="arrow.backward"
+                    size={24}
+                    color={ColorsBase.neutral800}
+                />
+            </TouchableOpacity>
+        <HeaderApp />
+        <ThemedText type="subtitle">Agregar método de Pago</ThemedText>
+        <ThemedText>Selecciona el metodo:</ThemedText>
+        <TouchableOpacity style={styles.typeSelector} onPress={()=>router.push("/paymentMethod/add")}>
+            <MaterialIcons name="credit-card" size={24} color={ColorsBase.cyan400}/>
+            <View style={{gap:5}}>
+                <ThemedText style={{fontSize:18, fontWeight:700}}>Tarjeta de Crédito/Débito</ThemedText>
+                <ThemedText>Visa, Mastercard, AMEX</ThemedText>
             </View>
-            <View style={styles.cardContainer}>
-            {cards.length > 0 ? (
-                cards.map((c) => (
-                    <Card key={c.id} number={c.number} brand = {c.brand} id = {c.id}/> 
-                ))
-            ) : (
-                <Text>The are no cards registered</Text>
-            )}
-            </View>
-            <Link href="/paymentMethod/add" asChild > 
-               <View style={styles.btn}>
-                    <Pressable  style = {({pressed}) => [pressed && styles.pressed]} >
-                        <Text style = {styles.text}>+ Agregar una nueva tarjeta</Text>
-                    </Pressable>
-               </View>
-            </Link>
-          
-        </View>
-    );
-};
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#CCEDEB'
-    },
-    headerContainer : {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        marginBottom: 20
-    },
-    cardContainer : {
-        gap: 10,
-        marginBottom: 20
-    },
-    headerText: {
-        color : '#080808',
-        fontWeight: 'bold',
-        fontSize: 20
-    },
-    btn: {
-        backgroundColor: "#33B7AD",
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        alignItems: "center",
-      },
-    pressed: {
-        opacity: 0.8,
-      },
-    text: {
-        color: "#fff",
-      },
-});
-
-export default indexView;
+    typeSelector:{
+        flexDirection: "row",
+        borderColor: ColorsBase.cyan400,
+        borderWidth:1,
+        borderRadius:24,
+        padding:16,
+        gap:12,
+        backgroundColor: ColorsBase.neutral50
+    }
+})

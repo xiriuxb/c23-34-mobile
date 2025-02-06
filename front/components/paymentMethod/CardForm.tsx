@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { ColorsBase } from "@/constants/Colors";
+import { apiPostCards } from "@/api/cards.service";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import { router } from "expo-router";
+import LoadingScreen from "@/app/loading";
 
 export const CardForm = () => {
   const [cardNumber, setCardNumber] = useState("");
@@ -11,9 +16,28 @@ export const CardForm = () => {
   const [identificationNumber, setIdentificationNumber] = useState("");
   const [email, setEmail] = useState("");
 
+  const[loading, setLoading] = useState(false);
+
+  const {user, token} = useAuthStore();
+  const handleCreateCard = async()=>{
+    setLoading(true);
+    console.log(token, user)
+    const {ok, data} = await apiPostCards({token:token!,userId:user.id! });
+    if(ok){
+      setLoading(false);
+      router.replace("/paymentMethod/card-success")
+      return;
+    }
+    console.log(data)
+    setLoading(false);
+
+  }
+
   return (
     <View style={styles.container}>
-
+        <Modal transparent={true} animationType="slide" visible={loading}>
+          <LoadingScreen />
+        </Modal>
       <Text style={styles.label}>Número de Tarjeta</Text>
       <TextInput 
         style={styles.input} 
@@ -83,7 +107,7 @@ export const CardForm = () => {
         placeholder="correo@ejemplo.com" 
       />
 
-      <TouchableOpacity style={styles.button} onPress={() => console.log("Tarjeta registrada...")}>
+      <TouchableOpacity style={styles.button} onPress={() => handleCreateCard()}>
         <Text style={styles.buttonText}>Registrar Tarjeta</Text>
       </TouchableOpacity>
     </View>
@@ -92,10 +116,7 @@ export const CardForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
-    backgroundColor: "#f9f9f9",
-    justifyContent: "center",
     maxWidth: 400,
   },
   label: {
@@ -109,7 +130,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: ColorsBase.cyan400,
+    outlineColor: ColorsBase.cyan400,
     marginBottom: 12,
     fontSize: 16,
     shadowColor: "#000",
@@ -126,17 +148,19 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     backgroundColor: "#fff",
-    borderRadius: 10,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "transparent",
     overflow: "hidden",
   },
   picker: {
     height: 50,
+    borderColor: ColorsBase.cyan400,
+    borderRadius:10,
+    outlineColor: ColorsBase.cyan400
   },
   button: {
-    backgroundColor: "#28a745",
+    backgroundColor: ColorsBase.neutral800,
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
