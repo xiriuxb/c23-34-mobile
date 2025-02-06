@@ -1,26 +1,113 @@
-import React, { memo, useState } from "react";
-import TotalPayment from "@/components/TotalPayment";
+import React, { memo, useEffect, useState } from "react";
 import { Colors, ColorsBase } from "@/constants/Colors";
-import { FlatList, View } from "react-native";
-import { Button } from "react-native-paper";
+import { FlatList, Modal, TouchableOpacity, View } from "react-native";
+import { Button, Icon } from "react-native-paper";
 import HeaderApp from "./HeaderApp";
 import { ThemedText } from "../ThemedText";
 import ServicesClient from "./ServicesClient";
 import AllCards from "./AllCards";
+import TotalPayment from "./TotalPayment";
+import { IconSymbol } from "../ui/IconSymbol";
+import LoadingScreen from "@/app/loading";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import { apiGetUserDebts, apiGetUserServices } from "@/api/providers.service";
+import { router } from "expo-router";
 
 // based on /components/BodyDashboard by GioPati
 const BodyDashboard = () => {
-  const [totalDebt, setTotalDebt] = useState(0.1);
   const [pressCards, setPressCards] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [userServices, setUserServices] = useState([]);
+  const { user } = useAuthStore();
+
+  const getUserData = async () => {
+    setLoading(true);
+    const { ok, data } = await apiGetUserServices(user.id!);
+    if (ok) {
+      setUserServices(data);
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUserData();
+    apiGetUserDebts(user.id!);
+  }, []);
+
+  if (loading) {
+    return (
+      <Modal transparent={true} animationType="slide" visible>
+        <LoadingScreen />
+      </Modal>
+    );
+  }
+
   return (
     <FlatList
-      style={{ backgroundColor: ColorsBase.cyan100, paddingHorizontal:15 }}
+      style={{ backgroundColor: ColorsBase.cyan100, paddingHorizontal: 15 }}
       data={[]}
       renderItem={() => null}
       ListHeaderComponent={() => (
-        <View style={{ paddingTop: 20, gap: 15, paddingBottom:67 }}>
+        <View style={{ paddingTop: 20, gap: 15, paddingBottom: 67 }}>
           <HeaderApp />
           <TotalPayment progress={0.5} />
+          <TouchableOpacity
+            onPress={() =>
+              router.push("/dashboard/home/services/list")
+            }
+            style={{
+              maxWidth: 200,
+              borderColor: ColorsBase.cyan400,
+              borderWidth: 0.5,
+              borderRadius: 8,
+              backgroundColor: "#ffffff",
+              paddingVertical: 8,
+              paddingHorizontal: 16,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 8,
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-end",
+                  right: 5,
+                }}
+              >
+                <IconSymbol
+                  name="plus.app"
+                  color={ColorsBase.cyan400}
+                  size={20}
+                  style={{ right: -5 }}
+                />
+                <IconSymbol
+                  name="house.slash"
+                  color={ColorsBase.cyan400}
+                  size={30}
+                />
+              </View>
+              <View>
+                <ThemedText
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 700,
+                    color: ColorsBase.cyan400,
+                  }}
+                >
+                  Agregar Servicio
+                </ThemedText>
+              </View>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
               flexDirection: "row",
@@ -40,7 +127,6 @@ const BodyDashboard = () => {
                 pressCards ? Colors.light.background : ColorsBase.cyan500
               }
               onPress={() => {
-                setTotalDebt(0.5);
                 setPressCards(true);
               }}
               mode={pressCards ? "contained" : "outlined"}
@@ -82,7 +168,11 @@ const BodyDashboard = () => {
               </ThemedText>
             </Button>
           </View>
-          {pressCards ? <ServicesClient /> : <AllCards />}
+          {pressCards ? (
+            <ServicesClient servicesList={userServices} />
+          ) : (
+            <AllCards />
+          )}
         </View>
       )}
     />
