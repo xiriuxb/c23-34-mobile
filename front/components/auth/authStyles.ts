@@ -1,3 +1,4 @@
+import { ColorsBase } from "@/constants/Colors";
 import { StyleSheet } from "react-native";
 
 const authStyles = StyleSheet.create({
@@ -23,6 +24,16 @@ const authStyles = StyleSheet.create({
         gap: 16,
         justifyContent: "center",
         flex:1
+    },
+    formBackError: {
+        backgroundColor: ColorsBase.red50,
+        borderRadius:10,
+        borderWidth:1,
+        borderColor: ColorsBase.red300,
+        alignItems:"center"
+    },
+    formBackErrorText:{
+
     }
 });
 

@@ -1,3 +1,4 @@
+import { apiLogin, LoginForm } from "@/api/auth.service";
 import authStyles from "@/components/auth/authStyles";
 import MyInputText from "@/components/auth/MyInputText";
 import SimpleButton from "@/components/auth/SimpleButton";
@@ -10,38 +11,42 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Image,
+  Modal,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   TextInput,
   View,
 } from "react-native";
-
-type LoginForm = {
-  email: string;
-  password: string;
-};
+import LoadingScreen from "../loading";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 
 const loginFormDefaultValues: LoginForm = {
-  email: "",
-  password: "",
+  userEmail: "",
+  userPassword: "",
 };
 
 export default function LoginView() {
-  const { control, handleSubmit, formState:{isValid} } = useForm<LoginForm>({
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    formState: { isValid, isSubmitting },
+  } = useForm<LoginForm>({
     defaultValues: loginFormDefaultValues,
   });
   const [hidePassword, setHidePassword] = useState(true);
+  const {errorMessage, startLogin, status} = useAuthStore();
+
   const passwordRef = useRef<TextInput>(null);
 
   const handleHidePassword = () => {
     setHidePassword(!hidePassword);
   };
 
-  const handleSubmitForm = () => {
-    if(isValid){
-      console.log("Submitted");
-    }
+  const handleSubmitForm = async() => {
+      await startLogin(getValues());
   };
 
   return (
@@ -50,31 +55,37 @@ export default function LoginView() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={{ maxHeight: 900 }}
-        contentContainerStyle={baseStyle.scrollContainer}
-      >
+        contentContainerStyle={baseStyle.scrollContainer}>
         <View>
           <ThemedText style={baseStyle.title}>Ingresa a tu cuenta</ThemedText>
           <ThemedText style={baseStyle.subtitle}>
             ¡Y paga tus servicios cuando quieras!
           </ThemedText>
         </View>
-        <SafeAreaView style={[authStyles.form,baseStyle.form]}>
+        <SafeAreaView style={[authStyles.form, baseStyle.form]}>
+        {!!errorMessage.on && errorMessage.on == "auth"&& <ThemedView style={authStyles.formBackError}>
+          <ThemedText>
+            {errorMessage.message}
+          </ThemedText>
+        </ThemedView>}
           <MyInputText<LoginForm>
             control={control}
-            id="email"
-            name="email"
+            id="userEmail"
+            name="userEmail"
             inputMode="email"
             keyboardType="email-address"
             placeholder="Email"
             iconName="person.2"
             returnKeyType="next"
-            onSubmitEditing={() => {passwordRef?.current?.focus();}}
+            onSubmitEditing={() => {
+              passwordRef?.current?.focus();
+            }}
             rules={{ required: "Requerido" }}
           ></MyInputText>
           <MyInputText<LoginForm>
             control={control}
             id="password"
-            name="password"
+            name="userPassword"
             inputMode="text"
             placeholder="Password"
             iconName="shield"
@@ -136,7 +147,7 @@ export const baseStyle = StyleSheet.create({
   },
   form: {
     gap: 30,
-    flex: undefined
+    flex: undefined,
   },
   title: {
     fontWeight: 700,

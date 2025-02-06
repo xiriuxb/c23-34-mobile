@@ -8,7 +8,7 @@ import { ScrollView, View } from "react-native";
 
 export default function RegisterPersonalView() {
   return (
-    <ThemedView style={{ height: "100%" }}>
+    <ThemedView style={{ flex:1 }}>
       <View style={authStyles.regTitleContainer}>
         <IconSymbol name="person.2" color={ColorsBase.cyan400} size={24} />
         <ThemedText style={authStyles.regTitle}>
@@ -17,7 +17,7 @@ export default function RegisterPersonalView() {
       </View>
       <ScrollView
         keyboardShouldPersistTaps="always"
-        contentContainerStyle={{flexGrow:1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <RegisterFormPersonal />
       </ScrollView>

@@ -4,17 +4,29 @@ import IconFlame from "@/assets/svgs/icon-flame";
 import IconWater from "@/assets/svgs/icon-water";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { ColorsBase } from "@/constants/Colors";
+import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 import { scaleHeight, scaleWidth } from "@/constants/Scale";
+import { useAuthStore } from "@/hooks/useAuthStore";
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { Platform, StyleSheet, ViewProps } from "react-native";
 import Animated, { Easing, SlideInDown } from "react-native-reanimated";
 
 export default function Welocome() {
+  const {checkAuthToken, status} = useAuthStore()
   useEffect(() => {
-    setTimeout(()=>{
-        router.replace('/auth/login')
-    }, Platform.OS == "web"?3000:2500)
+    setTimeout(
+      () => {
+        if(status === AUTH_STATUS.not_authenticated){
+          router.navigate("/auth/login");
+          return;
+        } else {
+          checkAuthToken();
+        }
+      },
+      Platform.OS == "web" ? 3000 : 2500
+    );
   }, []);
   return (
     <ThemedView style={styles.container}>
@@ -29,6 +41,9 @@ export default function Welocome() {
       {/* Bottom icons */}
       <AnimatedContainer delay={1000} leftUnscaled={-15} topUnscaled={377}>
         <IconFlame
+          scale={1}
+          bgColor={ColorsBase.cyan200}
+          color={ColorsBase.cyan100}
           style={{
             transform: [{ rotate: "15deg" }],
           }}
@@ -36,6 +51,9 @@ export default function Welocome() {
       </AnimatedContainer>
       <AnimatedContainer delay={1100} leftUnscaled={96} topUnscaled={465}>
         <IconWater
+          scale={1}
+          bgColor={ColorsBase.cyan300}
+          color={ColorsBase.cyan100}
           style={{
             transform: [{ rotate: "15deg" }],
           }}
@@ -43,6 +61,9 @@ export default function Welocome() {
       </AnimatedContainer>
       <AnimatedContainer delay={1050} leftUnscaled={210} topUnscaled={420}>
         <IconElectricity
+          scale={1}
+          bgColor={ColorsBase.cyan200}
+          color={ColorsBase.cyan100}
           style={{
             transform: [{ rotate: "-15deg" }],
           }}

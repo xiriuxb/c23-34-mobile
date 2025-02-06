@@ -3,8 +3,10 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+import { cyan100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors'
+
+const tintColorLight = '#0a7ea4'
+const tintColorDark = '#fff'
 
 export const ColorsBase = {
   blue50: "#e6f0f9",
@@ -18,13 +20,19 @@ export const ColorsBase = {
   blue800: "#00386a",
   blue900: "#002b51",
   cyan50: "#E6F6F5",
+  cyan100: "#CCEDEB",
   cyan200: "#99DBD6",
+  cyan300: "#66C9C2",
   cyan400: "#33B7AD",
   cyan500: "#00A599",
   cyan600: "#008B80",
+  neutral50: "#f7f7f7",
+  neutral200: "#dfdfdf",
   neutral400: "#bfbfbf",
   neutral500: "#999999",
   neutral600: "#777777",
+  neutral700: "#555555",
+  neutral800: "#333333",
   red50: "#fce6e6",
   red100: "#f6b0b0",
   red200: "#f18a8a",
@@ -48,24 +56,24 @@ export const ColorsBase = {
 }
 
 export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-    hrefLink: ColorsBase.cyan500,
-    error: "red"
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-    hrefLink: ColorsBase.cyan500,
-    error: "red"
-  },
-};
+	light: {
+		text: '#11181C',
+		background: '#fff',
+		tint: tintColorLight,
+		icon: '#687076',
+		tabIconDefault: '#687076',
+		tabIconSelected: tintColorLight,
+		hrefLink: ColorsBase.cyan500,
+		error: 'red',
+	},
+	dark: {
+		text: '#ECEDEE',
+		background: '#151718',
+		tint: tintColorDark,
+		icon: '#9BA1A6',
+		tabIconDefault: '#9BA1A6',
+		tabIconSelected: tintColorDark,
+		hrefLink: ColorsBase.cyan500,
+		error: 'red',
+	},
+}

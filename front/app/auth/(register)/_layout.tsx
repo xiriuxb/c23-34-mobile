@@ -1,26 +1,21 @@
-import RegisterUserProvider from "@/app/contexts/RegisterUserProvider";
+import RegisterUserProvider from "@/contexts/RegisterUserProvider";
 import HeaderRegister from "@/components/auth/HeaderRegister";
 import { ThemedView } from "@/components/ThemedView";
-import { Href, router, Stack, usePathname } from "expo-router";
-import { useEffect, useState } from "react";
+import { router, Slot } from "expo-router";
 import { View } from "react-native";
-
-const backRoutes: Record<string, Href> = {
-  personal: "/auth/login",
-  data: "/auth/register/personal",
-  "confirm-mail": "/auth/login",
-};
+import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
 
 export default function RegisterLayout() {
-  const segments = usePathname();
-  const [path, setPath] = useState("personal");
 
-  useEffect(() => {
-    setPath(segments.split("/").pop()!);
-  }, [segments]);
+  const lastSegment = useLastRouteSegment();
 
   const handleBack = () => {
-    router.replace(backRoutes[path]);
+    if(lastSegment==="confirm-mail"){
+      router.dismissAll()
+      router.replace("/auth/login")
+      return;
+    }
+    router.back()
   };
 
   return (
@@ -34,13 +29,7 @@ export default function RegisterLayout() {
       >
         <HeaderRegister handleBack={handleBack} />
         <View style={{ flex: 1, width: "100%" }}>
-          <Stack>
-            <Stack.Screen name="register" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="confirm-mail"
-              options={{ headerShown: false }}
-            />
-          </Stack>
+          <Slot />
         </View>
       </ThemedView>
     </RegisterUserProvider>

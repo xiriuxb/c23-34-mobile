@@ -8,7 +8,7 @@ import { ScrollView, View } from "react-native";
 
 export default function RegisterDataView() {
   return (
-    <ThemedView style={{ height: "100%" }}>
+    <ThemedView style={{ height: "100%", flex:1 }}>
       <View style={authStyles.regTitleContainer}>
         <IconSymbol name="person.2" color={ColorsBase.cyan400} size={24} />
         <ThemedText style={authStyles.regTitle}>
