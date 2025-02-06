@@ -6,6 +6,7 @@ interface UserInfo {
     userEmail?: string;
     userLastName?: string;
     userName?: string;
+    id?: string
 }
 
 export interface AuthState {

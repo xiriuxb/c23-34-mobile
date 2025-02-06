@@ -31,6 +31,7 @@ export const ColorsBase = {
   neutral400: "#bfbfbf",
   neutral500: "#999999",
   neutral600: "#777777",
+  neutral700: "#555555",
   neutral800: "#333333",
   red50: "#fce6e6",
   red100: "#f6b0b0",

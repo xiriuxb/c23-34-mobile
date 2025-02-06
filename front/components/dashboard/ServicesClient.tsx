@@ -53,13 +53,13 @@ import IconStatus from '../IconStatus'
 	},
 ]
 
-const ServicesClient = () => {
+const ServicesClient = ({servicesList}:{servicesList?:any[]}) => {
 
 	const theme = useColorScheme() ?? 'light'
 	const insets = useSafeAreaInsets()
 	return (
 		<Animated.FlatList
-			data={data}
+			data={servicesList!== undefined?servicesList:data}
 			ListEmptyComponent={() => (
 				<ThemedView
 					style={{
@@ -114,21 +114,21 @@ const ServicesClient = () => {
 									flexDirection: 'row',
 								}}
 							>
-								{item.type === 'Agua' ? (
+								{item.category.name === 'Agua' ? (
 									<IconWater
 										bgColor={ColorsBase.blue50}
 										color={ColorsBase.blue400}
 										size={32}
 										scale={1.4}
 									/>
-								) : item.type === 'Electricidad' ? (
+								) : item.category.name === 'Luz' ? (
 									<IconElectricity
 										scale={1.4}
 										size={32}
 										color={ColorsBase.yellow400}
 										bgColor={ColorsBase.yellow50}
 									/>
-								) : item.type === 'Gas' ? (
+								) : item.category.name === 'Gas' ? (
 									<IconFlame
 										bgColor={ColorsBase.red50}
 										color={ColorsBase.red400}
@@ -150,13 +150,13 @@ const ServicesClient = () => {
 
 								<ThemedView style={{ marginLeft: 10 }}>
 									<ThemedText type='defaultSemiBold'>
-										{item.type}
+										{item.category.name}
 									</ThemedText>
 									<ThemedText
 										type='default'
 										style={{
 											color:
-												item.type == 'Agua'
+												item.category.name == 'Agua'
 													? ColorsBase.blue400
 													: item.type === 'Gas'
 													? ColorsBase.red400
@@ -165,7 +165,7 @@ const ServicesClient = () => {
 													: ColorsBase.yellow400,
 										}}
 									>
-										{item.Empresa}
+										{item.name}
 									</ThemedText>
 								</ThemedView>
 							</View>
@@ -184,7 +184,7 @@ const ServicesClient = () => {
 								type='defaultSemiBold'
 								style={{ color: ColorsBase.cyan500 }}
 							>
-								{item.Client}
+								{item.registeredUsers[0].clienteId}
 							</ThemedText>
 							<MaterialCommunityIcons
 								name='content-copy'
@@ -200,7 +200,7 @@ const ServicesClient = () => {
 							}}
 						>
 							<ThemedText>Vencimiento</ThemedText>
-							<ThemedText>{item.fechVen}</ThemedText>
+							<ThemedText>{item.fechVen?item.fechVen:"30/02/2025"}</ThemedText>
 						</View>
 						<View
 							style={{
@@ -209,7 +209,7 @@ const ServicesClient = () => {
 							}}
 						>
 							<ThemedText>Total a pagar</ThemedText>
-							<ThemedText> ARS $ {item.totalPagar}</ThemedText>
+							<ThemedText> ARS $ {item.totalPagar?item.totalPagar:"75.900"}</ThemedText>
 						</View>
 						<View
 							style={{

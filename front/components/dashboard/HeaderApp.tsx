@@ -1,6 +1,6 @@
 import { Colors, ColorsBase } from '@/constants/Colors'
 import React, { memo } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Avatar, Card } from 'react-native-paper'
 import { useColorScheme } from '@/hooks/useColorScheme.web'
 import IconNotifications from '@/assets/svgs/icon-notifications'
@@ -17,16 +17,16 @@ const HeaderApp = () => {
 	
 	return (
 		<Card.Title
-			title={<ThemedText type='subtitle'>{`${user.userName} ${user.userLastName}`}</ThemedText>}
+			title={<ThemedText style={{fontSize:16, lineHeight:30 }} type='subtitle'>{`${user.userName} ${user.userLastName}`}</ThemedText>}
 			subtitle={
 				<TouchableOpacity
 					onPress={() =>
 						router.push('/dashboard/user')
 					}
 				>
-					<ThemedText style={{ color: ColorsBase.cyan600 }}>
+					<Text style={{ fontSize:12, lineHeight:14,color: ColorsBase.cyan600 }}>
 						Ver perfil
-					</ThemedText>
+					</Text>
 				</TouchableOpacity>
 			}
 			style={[
@@ -64,10 +64,10 @@ const style = StyleSheet.create({
 	header_Container: {
 		borderRadius: 32,
 		paddingHorizontal: 16,
-		paddingVertical: 8,
-		overflow: 'hidden',
 		borderWidth: 0.5,
 		borderColor: ColorsBase.cyan400,
+		maxHeight:56,
+		minHeight:56,
 	},
 	badge: {
 		position: 'absolute',
