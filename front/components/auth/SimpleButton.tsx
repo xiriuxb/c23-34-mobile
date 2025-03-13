@@ -4,6 +4,7 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ColorsBase } from "@/constants/Colors";
 
 export type SimpleButtonProps = TouchableOpacityProps & {
   children: React.ReactNode;
@@ -36,7 +37,11 @@ export default function SimpleButton({
 
 export const baseStyle = StyleSheet.create({
   buttonLink: {
-    borderRadius: 14,
+    borderColor: ColorsBase.cyan400,
+    borderWidth: 1,
+    borderRadius: 32,
+    backgroundColor: "#ffffff",
+    paddingVertical: 8,
     padding: 14,
     alignItems: "center",
   },
