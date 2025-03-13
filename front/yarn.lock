@@ -3021,6 +3021,11 @@ data-urls@^3.0.2:
     whatwg-mimetype "^3.0.0"
     whatwg-url "^11.0.0"
 
+date-fns@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.1.0.tgz#64b3d83fff5aa80438f5b1a633c2e83b8a1c2d14"
+  integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
+
 debug@2.6.9, debug@^2.2.0, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
@@ -4198,7 +4203,7 @@ inline-style-prefixer@^6.0.1:
     expo-symbols "~0.2.1"
     expo-system-ui "~4.0.7"
     expo-web-browser "~14.0.2"
-    insurely "file:C:/Users/jorge/AppData/Local/Yarn/Cache/v6/npm-insurely-1.0.0-786f1653-4987-42cb-8fd1-2781d32f7211-1738858486374/node_modules/insurely"
+    insurely "file:../../../../.cache/yarn/v6/npm-insurely-1.0.0-4f7c4a7d-d70a-46fa-9d3e-ed718632efae-1739823882208/node_modules/insurely"
     react "18.3.1"
     react-dom "18.3.1"
     react-hook-form "^7.54.2"
