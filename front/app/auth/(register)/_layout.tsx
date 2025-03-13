@@ -1,4 +1,3 @@
-import RegisterUserProvider from "@/contexts/RegisterUserProvider";
 import HeaderRegister from "@/components/auth/HeaderRegister";
 import { ThemedView } from "@/components/ThemedView";
 import { router, Slot } from "expo-router";
@@ -19,7 +18,6 @@ export default function RegisterLayout() {
   };
 
   return (
-    <RegisterUserProvider>
       <ThemedView
         style={{
           height: "100%",
@@ -32,6 +30,5 @@ export default function RegisterLayout() {
           <Slot />
         </View>
       </ThemedView>
-    </RegisterUserProvider>
   );
 }
