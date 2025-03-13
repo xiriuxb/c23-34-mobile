@@ -1,4 +1,4 @@
-import { apiLogin, LoginForm } from "@/api/auth.service";
+import { LoginForm } from "@/api/auth.service";
 import authStyles from "@/components/auth/authStyles";
 import MyInputText from "@/components/auth/MyInputText";
 import SimpleButton from "@/components/auth/SimpleButton";
@@ -6,21 +6,16 @@ import ThemedLink from "@/components/auth/ThemedLink";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors, ColorsBase } from "@/constants/Colors";
-import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Image,
-  Modal,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TextInput,
   View,
 } from "react-native";
-import LoadingScreen from "../loading";
 import { useAuthStore } from "@/hooks/useAuthStore";
-import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 
 const loginFormDefaultValues: LoginForm = {
   userEmail: "",
@@ -37,7 +32,7 @@ export default function LoginView() {
     defaultValues: loginFormDefaultValues,
   });
   const [hidePassword, setHidePassword] = useState(true);
-  const {errorMessage, startLogin, status} = useAuthStore();
+  const { errorMessage, startLogin, status } = useAuthStore();
 
   const passwordRef = useRef<TextInput>(null);
 
@@ -45,8 +40,8 @@ export default function LoginView() {
     setHidePassword(!hidePassword);
   };
 
-  const handleSubmitForm = async() => {
-      await startLogin(getValues());
+  const handleSubmitForm = async () => {
+    await startLogin(getValues());
   };
 
   return (
@@ -55,19 +50,20 @@ export default function LoginView() {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={{ maxHeight: 900 }}
-        contentContainerStyle={baseStyle.scrollContainer}>
+        contentContainerStyle={baseStyle.scrollContainer}
+      >
         <View>
           <ThemedText style={baseStyle.title}>Ingresa a tu cuenta</ThemedText>
           <ThemedText style={baseStyle.subtitle}>
             ¡Y paga tus servicios cuando quieras!
           </ThemedText>
         </View>
-        <SafeAreaView style={[authStyles.form, baseStyle.form]}>
-        {!!errorMessage.on && errorMessage.on == "auth"&& <ThemedView style={authStyles.formBackError}>
-          <ThemedText>
-            {errorMessage.message}
-          </ThemedText>
-        </ThemedView>}
+        <View style={[authStyles.form, baseStyle.form]}>
+          {!!errorMessage.on && errorMessage.on == "auth" && (
+            <ThemedView style={authStyles.formBackError}>
+              <ThemedText>{errorMessage.message}</ThemedText>
+            </ThemedView>
+          )}
           <MyInputText<LoginForm>
             control={control}
             id="userEmail"
@@ -105,7 +101,7 @@ export default function LoginView() {
               Iniciar sesión
             </ThemedText>
           </SimpleButton>
-        </SafeAreaView>
+        </View>
         <View style={{ alignItems: "center", gap: 16 }}>
           <ThemedText>
             ¿No Tienes Cuenta?{" "}
