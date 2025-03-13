@@ -28,7 +28,8 @@ const MAPPING = {
   "dpad.right.fill": "keyboard-arrow-right",
   "pencil":"edit",
   "house.slash":"roofing",
-  "plus.app":"add"
+  "plus.app":"add",
+  "0.circle.ar":"search"
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],

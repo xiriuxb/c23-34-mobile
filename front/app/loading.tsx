@@ -1,7 +1,9 @@
 import IconAppSvgAnimated from "@/assets/svgs/animated-icon-svg";
 import { ThemedText } from "@/components/ThemedText";
 import { ColorsBase } from "@/constants/Colors";
+import { windowHeight, windowWidth } from "@/constants/Scale";
 import { useEffect } from "react";
+import { Dimensions } from "react-native";
 import Animated, {
   interpolateColor,
   useSharedValue,
@@ -53,8 +55,8 @@ export default function LoadingScreen({message}:{message?:string}) {
       style={[
         animatedBackground,
         {
-          height: "100%",
-          width: "100%",
+          height: windowHeight,
+          width: windowWidth,
           justifyContent: "center",
           alignItems: "center",
         },

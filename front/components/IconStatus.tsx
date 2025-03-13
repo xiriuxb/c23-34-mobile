@@ -19,7 +19,7 @@ const IconStatus: React.FC<IconStateProps> = ({ status }) => {
 						? ColorsBase.red400
 						: status === 'Pendiente'
 						? ColorsBase.yellow400
-						: ColorsBase.green400,
+						: ColorsBase.cyan100,
 				height: '50%',
 				paddingHorizontal: 10,
 				borderRadius: 10,
