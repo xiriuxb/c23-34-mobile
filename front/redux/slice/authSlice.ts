@@ -1,6 +1,5 @@
 import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface UserInfo {
     userEmail?: string;

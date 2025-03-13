@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import RegisterUserContext, {
   initialRegValues,
-  RegDataVals,
 } from "./RegisterUserContext";
+import { RegDataVals } from "@/api/auth.service";
 
 export default function RegisterUserProvider({
   children,

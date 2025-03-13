@@ -10,6 +10,7 @@ import { View } from "react-native";
 import { useLastRouteSegment } from "@/hooks/useLastRouteSegment";
 import { apiRegister } from "@/api/auth.service";
 import { useAuthStore } from "@/hooks/useAuthStore";
+import RegisterUserProvider from "@/contexts/RegisterUserProvider";
 
 const nextRoutes: Record<string, Href> = {
   personal: "/auth/(register)/register/reg-data",
@@ -19,10 +20,14 @@ const nextRoutes: Record<string, Href> = {
 export default function RegisterRegLayout() {
   return (
     <ThemedView style={{ flex: 1, height: "100%" }}>
+      <RegisterUserProvider>
+
       <View style={{ maxHeight: 900, flex: 1 }}>
         <Slot />
         <RegFooter />
       </View>
+      </RegisterUserProvider>
+      
     </ThemedView>
   );
 }

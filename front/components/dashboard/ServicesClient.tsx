@@ -13,6 +13,7 @@ import { router } from 'expo-router'
 import { ThemedView } from '../ThemedView'
 import { ThemedText } from '../ThemedText'
 import IconStatus from '../IconStatus'
+import ServicesIcons from '../ServicesIcons'
 
 // based on /components/ServicesClient by GioPati
 	/* 
@@ -114,39 +115,7 @@ const ServicesClient = ({servicesList}:{servicesList?:any[]}) => {
 									flexDirection: 'row',
 								}}
 							>
-								{item.category.name === 'Agua' ? (
-									<IconWater
-										bgColor={ColorsBase.blue50}
-										color={ColorsBase.blue400}
-										size={32}
-										scale={1.4}
-									/>
-								) : item.category.name === 'Luz' ? (
-									<IconElectricity
-										scale={1.4}
-										size={32}
-										color={ColorsBase.yellow400}
-										bgColor={ColorsBase.yellow50}
-									/>
-								) : item.category.name === 'Gas' ? (
-									<IconFlame
-										bgColor={ColorsBase.red50}
-										color={ColorsBase.red400}
-										size={32}
-										scale={1.5}
-									/>
-								) : (
-									<MaterialIcons
-										name='wifi'
-										color={'#834E9C'}
-										size={30}
-										style={{
-											backgroundColor: '#e2cced',
-											padding: 8,
-											borderRadius: 10,
-										}}
-									/>
-								)}
+								<ServicesIcons category={item.category.name}/>
 
 								<ThemedView style={{ marginLeft: 10 }}>
 									<ThemedText type='defaultSemiBold'>

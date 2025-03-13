@@ -1,27 +1,36 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { Colors, ColorsBase } from "@/constants/Colors";
-import { FlatList, Modal, TouchableOpacity, View } from "react-native";
-import { Button, Icon } from "react-native-paper";
+import { FlatList, Modal, View } from "react-native";
+import { Button } from "react-native-paper";
 import HeaderApp from "./HeaderApp";
 import { ThemedText } from "../ThemedText";
-import ServicesClient from "./ServicesClient";
-import AllCards from "./AllCards";
 import TotalPayment from "./TotalPayment";
-import { IconSymbol } from "../ui/IconSymbol";
 import LoadingScreen from "@/app/loading";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { apiGetUserDebts, apiGetUserServices } from "@/api/providers.service";
-import { router } from "expo-router";
+import ServiceCard from "./ServiceCard";
+import { apiGetCards } from "@/api/cards.service";
+import CreditCard from "./CreditCard";
 
 // based on /components/BodyDashboard by GioPati
 const BodyDashboard = () => {
   const [pressCards, setPressCards] = useState(true);
   const [loading, setLoading] = useState(true);
   const [userServices, setUserServices] = useState([]);
+  const [userCards, setUserCards] = useState([]);
   const { user } = useAuthStore();
 
-  const getUserData = async () => {
-    setLoading(true);
+  const handleGetCards = async () => {
+    const { ok, data } = await apiGetCards();
+    if (ok) {
+      setUserCards(data);
+      setLoading(false);
+      return;
+    }
+    setLoading(false)
+  };
+
+  const getData = async () => {
     const { ok, data } = await apiGetUserServices(user.id!);
     if (ok) {
       setUserServices(data);
@@ -32,9 +41,37 @@ const BodyDashboard = () => {
   };
 
   useEffect(() => {
-    getUserData();
+    getData();
+    handleGetCards();
     apiGetUserDebts(user.id!);
   }, []);
+
+  const header = useMemo(
+    () => (
+      <View style={{ paddingTop: 15, gap: 15 }}>
+        <HeaderApp />
+        <TotalPayment progress={0.5} />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <NavButtonServicesCards
+            cardsSelected={pressCards}
+            title="Servicios"
+            onPress={() => setPressCards(true)}
+          />
+          <NavButtonServicesCards
+            cardsSelected={!pressCards}
+            title="Mis Tarjetas"
+            onPress={() => setPressCards(false)}
+          />
+        </View>
+      </View>
+    ),
+    [pressCards]
+  );
 
   if (loading) {
     return (
@@ -47,136 +84,49 @@ const BodyDashboard = () => {
   return (
     <FlatList
       style={{ backgroundColor: ColorsBase.cyan100, paddingHorizontal: 15 }}
-      data={[]}
-      renderItem={() => null}
-      ListHeaderComponent={() => (
-        <View style={{ paddingTop: 20, gap: 15, paddingBottom: 67 }}>
-          <HeaderApp />
-          <TotalPayment progress={0.5} />
-          <TouchableOpacity
-            onPress={() =>
-              router.push("/dashboard/home/services/list")
-            }
-            style={{
-              maxWidth: 200,
-              borderColor: ColorsBase.cyan400,
-              borderWidth: 0.5,
-              borderRadius: 8,
-              backgroundColor: "#ffffff",
-              paddingVertical: 8,
-              paddingHorizontal: 16,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 8,
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "flex-end",
-                  right: 5,
-                }}
-              >
-                <IconSymbol
-                  name="plus.app"
-                  color={ColorsBase.cyan400}
-                  size={20}
-                  style={{ right: -5 }}
-                />
-                <IconSymbol
-                  name="house.slash"
-                  color={ColorsBase.cyan400}
-                  size={30}
-                />
-              </View>
-              <View>
-                <ThemedText
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 700,
-                    color: ColorsBase.cyan400,
-                  }}
-                >
-                  Agregar Servicio
-                </ThemedText>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 10,
-            }}
-          >
-            <Button
-              style={{
-                width: "48%",
-                borderColor: pressCards ? "transparent" : ColorsBase.cyan500,
-              }}
-              buttonColor={
-                pressCards ? ColorsBase.cyan500 : Colors.light.background
-              }
-              textColor={
-                pressCards ? Colors.light.background : ColorsBase.cyan500
-              }
-              onPress={() => {
-                setPressCards(true);
-              }}
-              mode={pressCards ? "contained" : "outlined"}
-            >
-              <ThemedText
-                type="default"
-                style={{
-                  color: pressCards
-                    ? Colors.light.background
-                    : ColorsBase.cyan500,
-                }}
-              >
-                Servicios
-              </ThemedText>
-            </Button>
-            <Button
-              style={{
-                width: "48%",
-                borderColor: pressCards ? ColorsBase.cyan500 : "transparent",
-              }}
-              buttonColor={
-                pressCards ? Colors.light.background : ColorsBase.cyan500
-              }
-              textColor={
-                pressCards ? ColorsBase.cyan500 : Colors.light.background
-              }
-              mode="outlined"
-              onPress={() => setPressCards(false)}
-            >
-              <ThemedText
-                type="default"
-                style={{
-                  color: pressCards
-                    ? ColorsBase.cyan500
-                    : Colors.light.background,
-                }}
-              >
-                Mis Tarjetas
-              </ThemedText>
-            </Button>
-          </View>
-          {pressCards ? (
-            <ServicesClient servicesList={userServices} />
-          ) : (
-            <AllCards />
-          )}
-        </View>
-      )}
+      contentContainerStyle={{ gap: 12 }}
+      data={userServices}
+      renderItem={({ item }) =>
+        pressCards ? <ServiceCard item={item} /> : <CreditCard card={item}/>
+      }
+      ListHeaderComponent={header}
+      ListFooterComponent={() => <View style={{ marginBottom: 67 }}></View>}
     />
   );
 };
 
 export default memo(BodyDashboard);
+
+function NavButtonServicesCards({
+  title,
+  cardsSelected,
+  onPress,
+}: {
+  title: string;
+  cardsSelected: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Button
+      style={{
+        width: "48%",
+        borderColor: cardsSelected ? "transparent" : ColorsBase.cyan500,
+      }}
+      buttonColor={cardsSelected ? ColorsBase.cyan500 : Colors.light.background}
+      textColor={cardsSelected ? Colors.light.background : ColorsBase.cyan500}
+      onPress={() => {
+        onPress();
+      }}
+      mode={cardsSelected ? "contained" : "outlined"}
+    >
+      <ThemedText
+        type="default"
+        style={{
+          color: cardsSelected ? Colors.light.background : ColorsBase.cyan500,
+        }}
+      >
+        {title}
+      </ThemedText>
+    </Button>
+  );
+}

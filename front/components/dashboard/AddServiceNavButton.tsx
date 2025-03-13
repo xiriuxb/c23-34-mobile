@@ -1,38 +1,15 @@
-import { ColorsBase } from "@/constants/Colors";
 import { router } from "expo-router";
-import { View } from "react-native";
+import { ColorsBase } from "@/constants/Colors";
+import { StyleSheet, View } from "react-native";
 import { IconSymbol } from "../ui/IconSymbol";
 import { ThemedText } from "../ThemedText";
 import SimpleButton from "../auth/SimpleButton";
 
 export default function AddServiceNavButton() {
   return (
-    <SimpleButton
-      onPress={() => router.push("/dashboard/home/services/list")}
-      style={{
-        borderColor: ColorsBase.cyan400,
-        borderWidth: 1,
-        borderRadius: 32,
-        backgroundColor: "#ffffff",
-        paddingVertical: 8,
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          gap: 8,
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "flex-end",
-            right: 5,
-          }}
-        >
+    <SimpleButton onPress={() => router.push("/dashboard/home/services/list")}>
+      <View style={styles.container}>
+        <View style={styles.iconsContainer}>
           <IconSymbol
             name="plus.app"
             color={ColorsBase.cyan400}
@@ -56,3 +33,18 @@ export default function AddServiceNavButton() {
     </SimpleButton>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    gap: 8,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconsContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    right: 5,
+  },
+});
