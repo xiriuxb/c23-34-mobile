@@ -2,7 +2,7 @@ import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
-import { Modal, View } from "react-native";
+import { Modal } from "react-native";
 import LoadingScreen from "../loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 

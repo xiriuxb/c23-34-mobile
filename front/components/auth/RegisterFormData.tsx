@@ -2,12 +2,12 @@ import { View } from "react-native";
 import MyInputText from "./MyInputText";
 import { ThemedText } from "../ThemedText";
 import authStyles from "./authStyles";
-import { useContext, useRef, useState } from "react";
+import { memo, useContext, useRef, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import RegisterUserContext from "@/contexts/RegisterUserContext";
 
-export default function RegisterFormData() {
-  const {control} = useContext(RegisterUserContext);
+const RegisterFormData = memo(function RegisterFormData() {
+  const { control } = useContext(RegisterUserContext);
 
   const passwordRef = useRef<TextInput>(null);
   const passwordConfRef = useRef<TextInput>(null);
@@ -16,10 +16,10 @@ export default function RegisterFormData() {
   const [hidePasswordConf, setHidePasswordConf] = useState(true);
 
   const handleHidePassword = () => {
-    setHidePassword(!hidePassword);
+    setHidePassword(prev=>!prev);
   };
   const handleHidePasswordConf = () => {
-    setHidePasswordConf(!hidePasswordConf);
+    setHidePasswordConf(prev=>!prev);
   };
 
   return (
@@ -33,7 +33,9 @@ export default function RegisterFormData() {
           iconName="mail"
           placeholder="Ingresa tu correo electrónico"
           returnKeyType="next"
-          onSubmitEditing={() => {passwordRef?.current?.focus();}}
+          onSubmitEditing={() => {
+            passwordRef?.current?.focus();
+          }}
         />
       </View>
       <View style={authStyles.formGroup}>
@@ -48,7 +50,9 @@ export default function RegisterFormData() {
           handleIconAction={handleHidePassword}
           secureTextEntry={hidePassword}
           myref={passwordRef}
-          onSubmitEditing={() => {passwordConfRef?.current?.focus();}}
+          onSubmitEditing={() => {
+            passwordConfRef?.current?.focus();
+          }}
         />
       </View>
       <View style={authStyles.formGroup}>
@@ -66,4 +70,6 @@ export default function RegisterFormData() {
       </View>
     </View>
   );
-}
+});
+
+export default RegisterFormData;

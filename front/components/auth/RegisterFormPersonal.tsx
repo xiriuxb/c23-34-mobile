@@ -2,10 +2,10 @@ import { SafeAreaView, View, TextInput } from "react-native";
 import MyInputText from "./MyInputText";
 import { ThemedText } from "../ThemedText";
 import authStyles from "./authStyles";
-import { useContext, useRef } from "react";
+import { memo, useContext, useRef } from "react";
 import RegisterUserContext from "@/contexts/RegisterUserContext";
 
-export default function RegisterFormPersonal() {
+ const RegisterFormPersonal = memo(function RegisterFormPersonal() {
   const {control} = useContext(RegisterUserContext);
 
   const lastNameRef = useRef<TextInput>(null);
@@ -47,4 +47,6 @@ export default function RegisterFormPersonal() {
       </View>
     </SafeAreaView>
   );
-}
+});
+
+export default RegisterFormPersonal;

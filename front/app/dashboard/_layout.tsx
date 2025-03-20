@@ -2,7 +2,6 @@ import { Colors, ColorsBase } from "@/constants/Colors";
 import { memo, useEffect } from "react";
 import { Modal, StyleSheet } from "react-native";
 import Animated from "react-native-reanimated";
-import { useColorScheme } from "@/hooks/useColorScheme.web";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -15,7 +14,6 @@ import { AUTH_STATUS } from "@/constants/enums/AuthStatus";
 
 const Dashboard = () => {
   const lastSegment = useLastRouteSegment();
-  const theme = useColorScheme() ?? "light";
   const { checkAuthToken, status } = useAuthStore();
 
   useEffect(() => {

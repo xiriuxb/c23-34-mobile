@@ -1,4 +1,5 @@
 import {
+  GestureResponderEvent,
   Pressable,
   StyleSheet,
   TextInput,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { memo, RefObject, useCallback, useMemo, useRef, useState } from "react";
 import {
   Control,
   FieldValues,
@@ -18,6 +19,7 @@ import {
 import { IconSymbol, IconSymbolName } from "../ui/IconSymbol";
 import { Colors, ColorsBase } from "@/constants/Colors";
 import { ThemedText } from "../ThemedText";
+import React from "react";
 
 export type MyInputTextProps<T extends FieldValues> = TextInputProps & {
   control: Control<T>;
@@ -34,7 +36,7 @@ export type MyInputTextProps<T extends FieldValues> = TextInputProps & {
   myref?: RefObject<TextInput>;
 };
 
-export default function MyInputText<T extends FieldValues>({
+function MyInputTextNoMemo<T extends FieldValues>({
   control,
   name,
   iconName = "house.fill" as IconSymbolName,
@@ -53,27 +55,34 @@ export default function MyInputText<T extends FieldValues>({
   });
 
   const { errors } = useFormState<T>({ control });
-  const inputRef = useRef<TextInput | null>(null);
+  const inputRef = useRef<TextInput>(null);
 
-  const focusInput = () => {
+  const focusInput = useCallback(() => {
     if (!readOnly) {
       setFfocus(true);
       inputRef.current?.focus();
     }
-  };
-  const blurInput = () => {
+  }, []);
+
+  const blurInput = useCallback(() => {
     setFfocus(false);
     inputRef.current?.blur();
-  };
+  }, []);
 
-  useEffect(() => {
-    if (myref) {
-      inputRef.current = myref.current;
-    }
-    return () => {
-      inputRef.current = null;
-    };
-  }, [myref]);
+  const containerStyle = useMemo(
+    () => [
+      styles.container,
+      {
+        borderColor: errors[name]
+          ? Colors.light.error
+          : ffocus
+          ? ColorsBase.cyan400
+          : ColorsBase.neutral400,
+        borderWidth: ffocus ? 3 : 1,
+      },
+    ],
+    [errors[name], ffocus]
+  );
 
   return (
     <View>
@@ -83,19 +92,7 @@ export default function MyInputText<T extends FieldValues>({
           focusInput();
         }}
       >
-        <View
-          style={[
-            styles.container,
-            {
-              borderColor: errors[name]
-                ? Colors.light.error
-                : ffocus
-                ? ColorsBase.cyan400
-                : ColorsBase.neutral400,
-              borderWidth: ffocus ? 3 : 1,
-            },
-          ]}
-        >
+        <View style={[containerStyle]}>
           <IconSymbol
             name={iconName}
             size={24}
@@ -104,9 +101,7 @@ export default function MyInputText<T extends FieldValues>({
           <TextInput
             readOnly={readOnly}
             {...rest}
-            onFocus={() => {
-              if (!readOnly) setFfocus(true);
-            }}
+            onFocus={focusInput}
             onBlur={blurInput}
             value={field.value}
             onChangeText={field.onChange}
@@ -116,9 +111,10 @@ export default function MyInputText<T extends FieldValues>({
             placeholderTextColor={ColorsBase.neutral400}
           />
           {iconAction && (
-            <TouchableOpacity onPress={handleIconAction}>
-              <IconSymbol name={iconAction} size={24} color={"black"} />
-            </TouchableOpacity>
+            <IconActionButton
+              iconAction={iconAction}
+              onIconPress={handleIconAction}
+            />
           )}
         </View>
       </Pressable>
@@ -130,6 +126,42 @@ export default function MyInputText<T extends FieldValues>({
     </View>
   );
 }
+
+const MyInputText = memo(MyInputTextNoMemo, (prevProps, nextProps) => {
+  return (
+    prevProps.iconAction === nextProps.iconAction &&
+    prevProps.handleIconAction === nextProps.handleIconAction
+  );
+}) as typeof MyInputTextNoMemo;
+
+export default MyInputText;
+
+
+const IconActionButton = memo(
+  function ({
+    iconAction,
+    onIconPress,
+  }: {
+    iconAction: IconSymbolName;
+    onIconPress?: () => void;
+  }) {
+    const onIconPressAction = useCallback((e: GestureResponderEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (onIconPress) {
+        onIconPress();
+      }
+    }, []);
+    return (
+      <TouchableOpacity onPress={onIconPressAction}>
+        <IconSymbol name={iconAction} size={24} color={"black"} />
+      </TouchableOpacity>
+    );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.iconAction === nextProps.iconAction;
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
